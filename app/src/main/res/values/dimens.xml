@@ -2,4 +2,6 @@
     <dimen name="app_bar_height">180dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
+    <!--Title标题字体大小-->
+    <dimen name="title_text_size">16sp</dimen>
 </resources>
