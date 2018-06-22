@@ -5,9 +5,6 @@ import android.support.v4.app.FragmentActivity
 import com.example.myapplication.Utils.LogUtils
 import com.example.myapplication.Utils.StatusBarCompat
 
-<<<<<<< HEAD
-open class BaseActivity : FragmentActivity()
-=======
 abstract class BaseActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +41,4 @@ abstract class BaseActivity : FragmentActivity() {
         super.onStop()
         LogUtils.showLog(this,"onStop")
     }
-}
->>>>>>> 678c526e73ad81ac3ae31099242eafa444901488
 }

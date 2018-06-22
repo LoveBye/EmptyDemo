@@ -1,8 +1,5 @@
 package com.example.myapplication
 
-<<<<<<< HEAD
-class BaseTitleActivity : BaseActivity()
-=======
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -45,6 +42,4 @@ abstract class BaseTitleActivity : BaseActivity(), View.OnClickListener {
             R.id.img_back -> ToastUtils.showToast(this, "点击了返回")
         }
     }
-}
->>>>>>> 678c526e73ad81ac3ae31099242eafa444901488
 }
