@@ -27,6 +27,13 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+<<<<<<< HEAD
+=======
+    api 'com.zhy:autolayout:1.4.5'
+
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18'
+
+>>>>>>> 678c526e73ad81ac3ae31099242eafa444901488
 }
 repositories {
     mavenCentral()
