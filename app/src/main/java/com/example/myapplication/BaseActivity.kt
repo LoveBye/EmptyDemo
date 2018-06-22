@@ -1,5 +1,6 @@
 package com.example.myapplication
 
+import android.os.Bundle
 import android.support.v4.app.FragmentActivity
 import com.example.myapplication.Utils.LogUtils
 import com.example.myapplication.Utils.StatusBarCompat
@@ -45,3 +46,4 @@ abstract class BaseActivity : FragmentActivity() {
     }
 }
 >>>>>>> 678c526e73ad81ac3ae31099242eafa444901488
+}

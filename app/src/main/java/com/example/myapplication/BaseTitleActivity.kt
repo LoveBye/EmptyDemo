@@ -47,3 +47,4 @@ abstract class BaseTitleActivity : BaseActivity(), View.OnClickListener {
     }
 }
 >>>>>>> 678c526e73ad81ac3ae31099242eafa444901488
+}
