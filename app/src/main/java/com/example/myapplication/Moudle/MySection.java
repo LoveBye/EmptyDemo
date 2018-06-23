@@ -6,6 +6,7 @@ import org.jetbrains.annotations.NotNull;
 
 public class MySection extends SectionEntity {
     private boolean isHeader;
+    private int icon;
     private String title;
     private String content;
 
@@ -13,11 +14,20 @@ public class MySection extends SectionEntity {
 //        super(isHeader, header);
 //    }
 
-    public MySection(boolean b, @NotNull String title, @NotNull String content) {
+    public MySection(boolean b, @NotNull int icon, @NotNull String title, @NotNull String content) {
         super(b, title);
         this.isHeader = isHeader;
+        this.icon = icon;
         this.title = title;
         this.content = content;
+    }
+
+    public int getIcon() {
+        return icon;
+    }
+
+    public void setIcon(int icon) {
+        this.icon = icon;
     }
 
     public MySection(String title) {
