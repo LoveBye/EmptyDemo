@@ -29,8 +29,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     compile 'com.zhy:autolayout:1.4.5'
-
-//    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18'
+    compile 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18'
 
 }
 repositories {
