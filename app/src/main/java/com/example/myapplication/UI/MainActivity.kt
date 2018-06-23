@@ -27,14 +27,18 @@ class MainActivity : BaseTitleActivity() {
         var list = ArrayList<MySection>()
         for (i in 0..40) {
             if (i % 6 == 0) {
-                list.add(MySection(false, R.drawable.share_black, "Title" + i, "Content" + i))
+                list.add(MySection(true, R.drawable.share_black, "Title" + i, "Content" + i))
             } else {
                 list.add(MySection(false, R.drawable.share_black, "Title" + i, "Content" + i))
             }
         }
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
-        initDecoration(recycler_catalog, list)
+        val img = ImageView(this)
+        img.setImageResource(R.drawable.default_loading_pic)
+        mAdapter.setHeaderView(img)
+        recycler_catalog.setZoomView(img)
+//        initDecoration(recycler_catalog, list)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -88,20 +92,16 @@ class MainActivity : BaseTitleActivity() {
                     override fun getGroupView(position: Int): View? {
                         //获取自定定义的组View
                         if (dataList.size > position) {
-                            val view = layoutInflater.inflate(R.layout.item_recycler_fenzu, null, false)
-                            if (position == 0) {
-                                view.findViewById<ImageView>(R.id.img_header).setVisibility(View.VISIBLE)
-                            } else {
-                                view.findViewById<ImageView>(R.id.img_header).setVisibility(View.GONE)
-                            }
+                            val view = layoutInflater.inflate(R.layout.base_header_recycler, null, false)
                             view.findViewById<TextView>(R.id.tv_name).setText(dataList[position].title)
-                            view.findViewById<ImageView>(R.id.iv_left).setImageResource(dataList[position].icon)
+//                            view.findViewById<ImageView>(R.id.iv_left).setImageResource(dataList[position].icon)
                             return view
                         } else {
                             return null
                         }
                     }
                 })
+                .setGroupHeight(200)
                 .build()
         rlv.addItemDecoration(decoration)
     }
