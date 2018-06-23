@@ -29,6 +29,7 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api 'com.zhy:autolayout:1.4.5'
+    compile 'com.google.code.gson:gson:2.8.1'
 }
 repositories {
     mavenCentral()
