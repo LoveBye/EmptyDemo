@@ -4,7 +4,7 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <com.example.myapplication.Widget.HeadZoomRecyclerView
         android:id="@+id/recycler_catalog"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

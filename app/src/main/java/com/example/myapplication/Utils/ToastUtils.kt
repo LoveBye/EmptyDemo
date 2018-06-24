@@ -14,7 +14,7 @@ object ToastUtils {
             sToast = Toast.makeText(context.applicationContext, msg, Toast.LENGTH_SHORT)
         }
         //如果这个Toast已经在显示了，那么这里会立即修改文本
-        sToast!!.setText(context.javaClass.name + msg) //吐司可以setText
+        sToast!!.setText(msg) //吐司可以setText
         sToast!!.show()
         //控制台输出
         Log.e(context.javaClass.name, msg)
