@@ -1,5 +1,6 @@
 package com.example.myapplication.rxjava.module.rxjava2.operators.item;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.myapplication.R;
@@ -33,6 +34,7 @@ public class RxZipActivity extends RxOperatorBaseActivity {
         return getString(R.string.rx_zip);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     protected void doSomething() {
         Observable.zip(getStringObservable(), getIntegerObservable(), new BiFunction<String, Integer, String>() {

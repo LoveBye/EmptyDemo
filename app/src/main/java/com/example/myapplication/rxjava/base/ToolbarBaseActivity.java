@@ -35,7 +35,7 @@ public abstract class ToolbarBaseActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        StatusBarUtil.setColor(this, getResources().getColor(R.color.blue)); //
+        StatusBarUtil.setColor(this, getResources().getColor(R.color.skyblue)); //
         if (getContentViewLayoutID() != 0) {
             initToolbar();
         }

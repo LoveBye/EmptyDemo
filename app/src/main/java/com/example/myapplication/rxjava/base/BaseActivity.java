@@ -19,7 +19,7 @@ import butterknife.ButterKnife;
 
 /**
  * Activity基类
- *
+ * <p>
  * Author: nanchen
  * Email: liushilin520@foxmail.com
  * Date: 2017-06-20  14:21
@@ -30,10 +30,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * 获取布局ID
      *
-     * @return  布局id
+     * @return 布局id
      */
     protected abstract int getContentViewLayoutID();
-
 
 
     /**
@@ -65,12 +64,16 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /** 子类可以重写决定是否使用透明状态栏 */
+    /**
+     * 子类可以重写决定是否使用透明状态栏
+     */
     protected boolean translucentStatusBar() {
         return false;
     }
 
-    /** 设置状态栏颜色 */
+    /**
+     * 设置状态栏颜色
+     */
     protected void initSystemBarTint() {
         Window window = getWindow();
         if (translucentStatusBar()) {
@@ -100,17 +103,19 @@ public abstract class BaseActivity extends AppCompatActivity {
         }
     }
 
-    /** 子类可以重写改变状态栏颜色 */
+    /**
+     * 子类可以重写改变状态栏颜色
+     */
     protected int setStatusBarColor() {
-        return R.color.blue;
+        return R.color.skyblue;
     }
 
     private Toast mToast;
 
-    protected void showToast(String desc){
-        if (mToast == null){
-            mToast = Toast.makeText(this.getApplicationContext(),desc,Toast.LENGTH_SHORT);
-        }else{
+    protected void showToast(String desc) {
+        if (mToast == null) {
+            mToast = Toast.makeText(this.getApplicationContext(), desc, Toast.LENGTH_SHORT);
+        } else {
             mToast.setText(desc);
         }
         mToast.show();

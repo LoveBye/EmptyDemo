@@ -1,5 +1,6 @@
 package com.example.myapplication.rxjava.module.rxjava2.operators.item;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.myapplication.R;
@@ -23,7 +24,7 @@ import io.reactivex.schedulers.Schedulers;
  * <p>
  * concatMap作用和flatMap几乎一模一样，唯一的区别是它能保证事件的顺序
  * <p>
- *
+ * <p>
  * Author: nanchen
  * Email: liushilin520@foxmail.com
  * Date: 2017-06-20  10:27
@@ -37,6 +38,7 @@ public class RxConcatMapActivity extends RxOperatorBaseActivity {
         return getString(R.string.rx_concatMap);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     protected void doSomething() {
         Observable.create(new ObservableOnSubscribe<Integer>() {
@@ -66,5 +68,4 @@ public class RxConcatMapActivity extends RxOperatorBaseActivity {
                     }
                 });
     }
-
 }
