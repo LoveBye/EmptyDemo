@@ -21,7 +21,7 @@
             android:value="1080" />
 
         <activity
-            android:name=".UI.MainActivity"
+            android:name=".view.MainActivity"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
@@ -29,8 +29,118 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".UI.PullDownEnlargeActivity" />
-        <activity android:name=".UI.GroupTitleActivity" />
-        <activity android:name=".UI.WaterfallActivity" />
+        <activity android:name=".view.PullDownEnlargeActivity" />
+        <activity android:name=".view.GroupTitleActivity" />
+        <activity android:name=".view.WaterfallActivity" />
+
+        <activity
+            android:name=".rxjava.module.HomeActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+
+        <!--操作符-->
+        <activity android:name=".rxjava.module.rxjava2.operators.RxOperatorsActivity" />
+
+        <!-- Create -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxCreateActivity" />
+
+        <!-- Just -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxJustActivity" />
+
+        <!-- Map -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxMapActivity" />
+
+        <!-- FlatMap -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxFlatMapActivity" />
+
+        <!-- concatMap -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxConcatMapActivity" />
+
+        <!-- take -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxTakeActivity" />
+
+        <!-- interval -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxIntervalActivity" />
+
+        <!-- timer -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxTimerActivity" />
+
+        <!-- zip -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxZipActivity" />
+
+        <!-- doOnNext -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxDoOnNextActivity" />
+
+        <!-- filter -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxFilterActivity" />
+
+        <!-- skip -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxSkipActivity" />
+
+        <!-- single -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxSingleActivity" />
+
+        <!-- buffer -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxBufferActivity" />
+
+        <!-- distinct -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxDistinctActivity" />
+
+        <!-- concat -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxConcatActivity" />
+
+        <!-- WebView -->
+        <activity android:name=".rxjava.module.web.WebViewActivity" />
+
+        <!-- defer -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxDeferActivity" />
+
+        <!-- reduce -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxReduceActivity" />
+
+        <!-- debounce -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxDebounceActivity" />
+
+        <!-- last -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxLastActivity" />
+
+        <!-- merge -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxMergeActivity" />
+
+        <!-- scan -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxScanActivity" />
+
+        <!-- window -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxWindowActivity" />
+
+        <!-- PublishSubject -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxPublishSubjectActivity" />
+
+        <!-- AsyncSubject -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxAsyncSubjectActivity" />
+
+        <!-- BehaviorSubject -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxBehaviorSubjectActivity" />
+
+        <!-- Completable -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxCompletableActivity" />
+
+        <!-- Flowable -->
+        <activity android:name=".rxjava.module.rxjava2.operators.item.RxFlowableActivity" />
+
+        <!--simple networking-->
+        <activity android:name=".rxjava.module.rxjava2.usecases.okHttp.RxNetSingleActivity" />
+
+        <!--rx-networking-->
+        <activity android:name=".rxjava.module.rxjava2.usecases.fastNetwork.RxNetworkActivity" />
+
+        <!--多个网络接口数据合并后再更新UI-->
+        <activity android:name=".rxjava.module.rxjava2.usecases.zip.RxCaseZipActivity" />
+
+        <!--多个网络请求依次依赖-->
+        <activity android:name=".rxjava.module.rxjava2.usecases.flatMap.RxCaseFlatMapActivity" />
+        <activity android:name=".rxjava.module.rxjava2.usecases.concat.RxCaseConcatActivity" />
+        <activity android:name=".rxjava.module.rxjava2.usecases.debounce.RxCaseDebounceActivity" />
+        <activity android:name=".rxjava.module.rxjava2.usecases.interval.RxCaseIntervalActivity" />
+        <activity android:name=".rxjava.module.rxjava2.thread.RxThreadActivity" />
     </application>
 </manifest>

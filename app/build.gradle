@@ -27,12 +27,26 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    api 'com.google.code.gson:gson:2.8.1'
+    api 'com.google.code.gson:gson:2.8.2'
     api 'com.zhy:autolayout:1.4.5'
-    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.18'
+    //    BaseQuickAdapter
+    api 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.20'
+    //    自定义分割线
     api 'com.gavin.com.library:stickyDecoration:1.1.1'
-    api 'com.github.bumptech.glide:glide:4.0.0'
+    api 'com.github.bumptech.glide:glide:4.5.0'
+    //    RxJava
+    api 'io.reactivex.rxjava2:rxjava:2.1.0'
+    api 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    api 'com.amitshekhar.android:rx2-android-networking:1.0.0'
+    api 'com.jakewharton:butterknife:8.8.1'
+    api 'com.android.support.constraint:constraint-layout:1.1.2'
+    api 'com.jaeger.statusbarutil:library:1.4.0'
+    api 'com.squareup.retrofit2:retrofit:2.3.0'
+    api 'com.squareup.retrofit2:converter-gson:2.3.0'
+    api 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
+    api 'com.jakewharton.rxbinding2:rxbinding:2.0.0'
 }
 repositories {
     mavenCentral()
