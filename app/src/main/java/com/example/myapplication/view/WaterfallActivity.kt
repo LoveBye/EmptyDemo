@@ -1,6 +1,8 @@
 package com.example.myapplication.view
 
 import android.Manifest
+import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Handler
 import android.os.Message
@@ -9,55 +11,52 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.StaggeredGridLayoutManager
 import android.view.View
-import android.widget.Toast
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.chad.library.adapter.base.BaseViewHolder
+import com.example.myapplication.R
 import com.example.myapplication.adapter.BaseAdapter
 import com.example.myapplication.moudle.ImageModel
-import com.example.myapplication.R
-import java.io.File
-import java.util.*
+import com.example.myapplication.utils.GlideUtils
+import kotlinx.android.synthetic.main.activity_waterfall.*
 
 class WaterfallActivity : BaseTitleActivity() {
-    private var mRlv: RecyclerView? = null
-    private var dataList: ArrayList<TempBean>? = null
+    private var dataList: ArrayList<TempBean> = ArrayList()
     private var thread: Thread? = null
-    private var adater: MyAdapter? = null
-    private var handler: Handler = object : Handler() {     //此处的object 要加，否则无法重写 handlerMessage
+    private var adater: MyAdapter = MyAdapter(R.layout.item_recycler_waterfall)
+    private var ITEM_COUNT = 20
+    private var handler: Handler = @SuppressLint("HandlerLeak")
+    object : Handler() {     //此处的object 要加，否则无法重写 handlerMessage
         override fun handleMessage(msg: Message?) {
             super.handleMessage(msg)
             if (msg?.what == 0) {
-                Toast.makeText(applicationContext, "子线程消息", Toast.LENGTH_LONG).show()
-                adater!!.setNewData(dataList)
+                if (dataList.size > ITEM_COUNT) {
+                    adater.setNewData(dataList.subList(0, ITEM_COUNT))
+                    adater.loadMoreComplete()
+                } else {
+                    adater.loadMoreEnd()
+                }
             }
         }
     }
 
     override fun initViews() {
-        mRlv = findViewById<View>(R.id.rlv) as RecyclerView
-        adater = MyAdapter(R.layout.item_recycler_waterfall)
-        mRlv!!.layoutManager = StaggeredGridLayoutManager(3, StaggeredGridLayoutManager.VERTICAL)
-        mRlv!!.adapter = adater
-        dataList = ArrayList()
-        dataList!!.add(TempBean("测试---->", R.drawable.temp_0))
-        dataList!!.add(TempBean("测试---->\n测试---->测试---->测试---->\n测试---->测试---->测试---->", R.drawable.temp_1))
-        dataList!!.add(TempBean("测试---->测试---->测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_2))
-        dataList!!.add(TempBean("测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_3))
-        dataList!!.add(TempBean("测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_4))
-        dataList!!.add(TempBean("测试---->\n测试---->\n测试---->测试---->测试---->测试---->\n测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_5))
-        dataList!!.add(TempBean("测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_1))
-        dataList!!.add(TempBean("测试---->\n测试---->\n测试---->测试---->\n测试---->测试---->\n测试---->", R.drawable.temp_2))
-        dataList!!.add(TempBean("测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_3))
-        dataList!!.add(TempBean("测试---->测试---->测试---->", R.drawable.temp_0))
-        dataList!!.add(TempBean("测试---->测试---->测试---->测试---->测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_4))
-        dataList!!.add(TempBean("测试---->测试---->测试---->测试---->测试---->测试---->测试---->", R.drawable.temp_5))
-//        adater!!.setNewData(dataList)
+        val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        rlv.layoutManager = manager
+        rlv.adapter = adater
+        rlv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                manager.invalidateSpanAssignments()
+            }
+        })
         checkPermissionAndLoadImages()
     }
 
     override fun initListeners() {
-
+        adater.setOnLoadMoreListener({
+            ITEM_COUNT = ITEM_COUNT + 20
+            handler.sendEmptyMessage(0)
+        }, rlv)
     }
 
     override fun setTitle(): String {
@@ -71,29 +70,25 @@ class WaterfallActivity : BaseTitleActivity() {
     private inner class MyAdapter(layoutResId: Int) : BaseAdapter<TempBean, BaseViewHolder>(layoutResId) {
         override fun convert(helper: BaseViewHolder, item: TempBean) {
             helper.setText(R.id.tv_name, item.name)
-            if (item.icon == 0) {
-                Glide.with(this@WaterfallActivity)
-                        .load(File(item.path))
-                        .apply(RequestOptions().centerCrop())
-                        .into(helper.getView(R.id.img_waterfall))
-            } else {
-                Glide.with(this@WaterfallActivity)
-                        .load(item.icon)
-                        .apply(RequestOptions().centerCrop())
-                        .into(helper.getView(R.id.img_waterfall))
+            GlideUtils.loadPic(this@WaterfallActivity,
+                    item.path,
+                    helper.getView(R.id.img_waterfall))
+            helper.getView<View>(R.id.item_parent).setOnClickListener {
+                val mListPics = arrayListOf<String>()
+                for (pics in data) {
+                    mListPics.add(pics.path.toString())
+                }
+                val intent = Intent(this@WaterfallActivity, ImagePagerActivity::class.java)
+                intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_INDEX, data.indexOf(item))
+                intent.putExtra(ImagePagerActivity.EXTRA_IMAGE_URLS, mListPics)
+                startActivity(intent)
             }
         }
     }
 
     private inner class TempBean {
         var name: String? = ""
-        var icon: Int = 0
         var path: String? = ""
-
-        constructor(name: String, icon: Int) {
-            this.name = name
-            this.icon = icon
-        }
 
         constructor(name: String, path: String) {
             this.name = name
@@ -109,16 +104,16 @@ class WaterfallActivity : BaseTitleActivity() {
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED) {
             //有权限，加载图片。
-            ImageModel.loadImageForSDCard(this, {
+            ImageModel.loadImageForSDCard(this) {
                 //folders是图片文件夹的列表，每个文件夹中都有若干张图片。
                 folders ->
                 for (item in folders) {
                     for (item1 in item.images) {
-                        dataList!!.add(TempBean(item1.name, item1.path))
+                        dataList.add(TempBean(item1.name, item1.path))
                     }
                 }
                 handler.sendEmptyMessage(0)
-            })
+            }
         } else {
             //没有权限，申请权限。
             var strings: Array<String> = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)

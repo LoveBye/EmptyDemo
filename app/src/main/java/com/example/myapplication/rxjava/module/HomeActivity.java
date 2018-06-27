@@ -19,6 +19,8 @@ import com.example.myapplication.rxjava.module.rxjava2.usecases.UseCasesFragment
 import com.example.myapplication.rxjava.module.web.WebViewActivity;
 import com.example.myapplication.rxjava.util.ScreenUtil;
 
+import java.util.Objects;
+
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -74,7 +76,9 @@ public class HomeActivity extends BaseActivity {
     public void initToolBar(Toolbar toolbar, boolean homeAsUpEnabled, String title) {
         toolbar.setTitle(title);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(homeAsUpEnabled);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Objects.requireNonNull(getSupportActionBar()).setDisplayHomeAsUpEnabled(homeAsUpEnabled);
+        }
     }
 
 

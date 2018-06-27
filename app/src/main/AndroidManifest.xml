@@ -32,6 +32,7 @@
         <activity android:name=".view.PullDownEnlargeActivity" />
         <activity android:name=".view.GroupTitleActivity" />
         <activity android:name=".view.WaterfallActivity" />
+        <activity android:name=".view.RetrofitActivity" />
 
         <activity
             android:name=".rxjava.module.HomeActivity"
@@ -142,5 +143,8 @@
         <activity android:name=".rxjava.module.rxjava2.usecases.debounce.RxCaseDebounceActivity" />
         <activity android:name=".rxjava.module.rxjava2.usecases.interval.RxCaseIntervalActivity" />
         <activity android:name=".rxjava.module.rxjava2.thread.RxThreadActivity" />
+
+
+        <activity android:name=".view.ImagePagerActivity" />
     </application>
 </manifest>

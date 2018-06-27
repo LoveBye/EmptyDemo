@@ -1,4 +1,5 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/item_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gainsboro">
@@ -16,8 +17,8 @@
             android:id="@+id/img_waterfall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="250px"
-            android:minHeight="100px"
+            android:maxHeight="200px"
+            android:minHeight="150px"
             android:src="@drawable/default_loading_pic" />
 
         <TextView
@@ -25,6 +26,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="20px"
-            android:text="1234567890" />
+            android:text="" />
     </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoLinearLayout>
