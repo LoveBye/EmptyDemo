@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.example.myapplication.rxjava.module.rxjava2.usecases.okHttp.RxNetSingleActivity">
+    tools:context="com.example.app.rxjava.module.rxjava2.usecases.okHttp.RxNetSingleActivity">
 
 
 

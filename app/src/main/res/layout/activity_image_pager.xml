@@ -6,11 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".view.ImagePagerActivity">
 
-    <com.example.myapplication.view.HackyViewPager
+    <com.example.app.widget.HackyViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:transitionName="transitionImg"></com.example.myapplication.view.HackyViewPager>
+        android:transitionName="transitionImg"></com.example.app.widget.HackyViewPager>
 
     <TextView
         android:id="@+id/indicator"

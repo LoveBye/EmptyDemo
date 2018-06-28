@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <com.example.myapplication.widget.BaseRecyclerView
+    <com.example.app.widget.BaseRecyclerView
         android:id="@+id/rlv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
