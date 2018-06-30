@@ -5,13 +5,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.app.R;
-import com.example.app.widget.zoom.PhotoView;
-import com.example.app.widget.zoom.PhotoViewAttacher;
+import com.github.chrisbanes.photoview.OnPhotoTapListener;
+import com.github.chrisbanes.photoview.PhotoView;
+import com.github.chrisbanes.photoview.PhotoViewAttacher;
 
 /**
  * 单张图片显示Fragment
@@ -42,9 +44,9 @@ public class ImageDetailFragment extends Fragment {
         final View v = inflater.inflate(R.layout.image_detail_fragment, container, false);
         mImageView = (PhotoView) v.findViewById(R.id.image);
         mAttacher = new PhotoViewAttacher(mImageView);
-        mAttacher.setOnPhotoTapListener(new PhotoViewAttacher.OnPhotoTapListener() {
+        mAttacher.setOnPhotoTapListener(new OnPhotoTapListener() {
             @Override
-            public void onPhotoTap(View view, float x, float y) {
+            public void onPhotoTap(ImageView view, float x, float y) {
                 getActivity().onBackPressed();
             }
         });

@@ -3,9 +3,9 @@ package com.example.app.rxjava.module.rxjava2.usecases.okHttp;
 import android.annotation.SuppressLint;
 import android.util.Log;
 
-import com.google.gson.Gson;
 import com.example.app.rxjava.model.MobileAddress;
 import com.example.app.rxjava.module.rxjava2.operators.item.RxOperatorBaseActivity;
+import com.google.gson.Gson;
 
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;

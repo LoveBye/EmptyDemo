@@ -1,6 +1,4 @@
-package com.example.app.bean;
-
-import com.example.app.utils.StringUtils;
+package com.example.app.widget.album;
 
 import java.util.ArrayList;
 
@@ -44,5 +42,13 @@ public class Folder {
             }
             images.add(image);
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Folder{" +
+                "name='" + name + '\'' +
+                ", images=" + images +
+                '}';
     }
 }

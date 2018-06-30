@@ -153,8 +153,8 @@ class WaterfallActivity : BaseTitleActivity() {
                 //folders是图片文件夹的列表，每个文件夹中都有若干张图片。
                 folders ->
                 for (item in folders) {
-                    for (item1 in item.images) {
-                        dataList.add(TempBean(item1.name, item1.path))
+                    for (item1 in item.images!!) {
+                        dataList.add(TempBean(item1.name!!, item1.path!!))
                     }
                 }
                 handler.sendEmptyMessage(0)
