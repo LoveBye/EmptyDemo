@@ -7,7 +7,7 @@ import com.example.app.bean.GetnumberNoInfo_sfBean
 import com.example.app.model.GetnumberNoInfo_sfModel
 import io.reactivex.functions.Consumer
 
-class GetnumberNoInfo_sfPresenter(val context: Context) : Consumer<GetnumberNoInfo_sfBean> {
+class GetnumberNoInfo_sfPresenter(val context: Context) : BasePresenter(), Consumer<GetnumberNoInfo_sfBean> {
     val mModel = GetnumberNoInfo_sfModel(context)
     lateinit var recycler: RecyclerView
     fun getnumberNoInfo_sf(recycler: RecyclerView) {
