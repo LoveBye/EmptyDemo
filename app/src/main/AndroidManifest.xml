@@ -36,7 +36,7 @@
         <activity android:name=".view.RetrofitActivity" />
 
         <activity
-            android:name=".rxjava.module.HomeActivity"
+            android:name=".rxjava.module.RxJavaActivity"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <!--操作符-->

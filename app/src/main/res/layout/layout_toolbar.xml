@@ -18,5 +18,4 @@
         android:text="南尘"
         android:textColor="@android:color/white"
         android:textSize="18sp" />
-
 </android.support.v7.widget.Toolbar>

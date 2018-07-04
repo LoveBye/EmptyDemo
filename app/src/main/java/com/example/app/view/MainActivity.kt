@@ -10,9 +10,9 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.example.app.R
 import com.example.app.adapter.BaseSectionAdapter
 import com.example.app.bean.MySection
-import com.example.app.rxjava.module.HomeActivity
-import com.example.app.widget.SectionDecoration
+import com.example.app.rxjava.module.RxJavaActivity
 import com.example.app.utils.ToastUtils
+import com.example.app.widget.SectionDecoration
 import com.gavin.com.library.listener.PowerGroupListener
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -29,7 +29,7 @@ class MainActivity : BaseTitleActivity() {
         list.add(MySection(false, R.drawable.share_black, "RecyclerView", "下拉放大Activity"))
         list.add(MySection(false, R.drawable.share_black, "RecyclerView", "分组Activity"))
         list.add(MySection(false, R.drawable.share_black, "RecyclerView", "瀑布流Activity"))
-        list.add(MySection(false, R.drawable.share_black, "RxJava", "RxJavaActivity"))
+        list.add(MySection(false, R.drawable.share_black, "RxJava", "RxJava1Activity"))
         list.add(MySection(false, R.drawable.share_black, "Retrofit", "RetrofitActivity"))
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
@@ -78,7 +78,7 @@ class MainActivity : BaseTitleActivity() {
                         startActivity(mIntent)
                     }
                     3 -> {
-                        mIntent.setClass(mContext, HomeActivity::class.java)
+                        mIntent.setClass(mContext, RxJavaActivity::class.java)
                         startActivity(mIntent)
                     }
                     4 -> {

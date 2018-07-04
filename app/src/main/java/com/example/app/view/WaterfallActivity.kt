@@ -56,6 +56,7 @@ class WaterfallActivity : BaseTitleActivity() {
         manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         rlv.layoutManager = manager
         rlv.adapter = adater
+        adater.helper.attachToRecyclerView(rlv)//设置可滚动
         rlv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -145,7 +146,7 @@ class WaterfallActivity : BaseTitleActivity() {
      * 检查权限并加载SD卡里的图片。
      */
     private fun checkPermissionAndLoadImages() {
-        var hasWriteContactsPermission = ContextCompat.checkSelfPermission(getApplication(),
+        val hasWriteContactsPermission = ContextCompat.checkSelfPermission(getApplication(),
                 Manifest.permission.WRITE_EXTERNAL_STORAGE);
         if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED) {
             //有权限，加载图片。
@@ -161,7 +162,7 @@ class WaterfallActivity : BaseTitleActivity() {
             }
         } else {
             //没有权限，申请权限。
-            var strings: Array<String> = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            val strings: Array<String> = arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE)
             ActivityCompat.requestPermissions(this,
                     strings, PERMISSION_REQUEST_CODE);
         }

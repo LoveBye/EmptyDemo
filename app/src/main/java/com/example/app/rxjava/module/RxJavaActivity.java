@@ -24,7 +24,7 @@ import java.util.Objects;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-public class HomeActivity extends BaseActivity {
+public class RxJavaActivity extends BaseActivity {
 
     @BindView(R.id.home_toolbar)
     Toolbar mToolbar;
@@ -42,7 +42,7 @@ public class HomeActivity extends BaseActivity {
 
     @Override
     protected int getContentViewLayoutID() {
-        return R.layout.activity_home;
+        return R.layout.activity_rx_java;
     }
 
     @Override
