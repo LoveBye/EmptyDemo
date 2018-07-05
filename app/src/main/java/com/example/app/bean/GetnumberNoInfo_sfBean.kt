@@ -1,74 +1,73 @@
 package com.example.app.bean
 
-class GetnumberNoInfo_sfBean {
-    var errorCode: String? = null
-    var data: List<Data>? = null
+data class GetnumberNoInfo_sfBean(
+        val errorCode: String,
+        val data: List<Data>
+)
 
-    inner class Advert_Position {
-        var id: Int = 0
-        var positionName: String? = null
-        var imgurl: String? = null
-        var linkurl: String? = null
-        var adtype: Int = 0
-    }
+data class Data(
+        val Advert_Position: List<AdvertPosition>,
+        val ChanneType: List<ChanneType>,
+        val Country: List<Country>,
+        val Member: List<Member>,
+        val GetChanneOnelList: List<GetChanneOnel>,
+        val Account_Catalog: List<AccountCatalog>
+)
 
-    inner class ChanneType {
-        var id: Int = 0
-        var channel_Name: String? = null
-        var channel_icon: String? = null
-        var type: Int = 0
-    }
+data class AdvertPosition(
+        val ID: Int,
+        val PositionName: String,
+        val imgurl: String,
+        val linkurl: String,
+        val adtype: Int
+)
 
-    inner class Country {
-        var id: Int = 0
-        var ccname: String? = null
-        var cename: String? = null
-        var national_Flag: String? = null
-        var picUrl: String? = null
-    }
+data class Member(
+        val ID: Int,
+        val headimgurl: String,
+        val RealName: Any,
+        val Mobile: String,
+        val Nickname: String,
+        val Channel_Name: String,
+        val int_products_count: Int,
+        val user_Integral: Int,
+        val is_Friends: Int,
+        val authID: Int
+)
 
-    inner class Member {
-        var id: Int = 0
-        var headimgurl: String? = null
-        var realName: String? = null
-        var mobile: String? = null
-        var nickname: String? = null
-        var channel_Name: String? = null
-        var int_products_count: Int = 0
-        var user_Integral: Int = 0
-        var is_Friends: Int = 0
-        var authID: Int = 0
-    }
+data class ChanneType(
+        val ID: Int,
+        val name: String,
+        val Channel_icon: String
+)
 
-    inner class ChannelTwo {
-        var id: Int = 0
-        var channel_Name: String? = null
-        var urL_GoTo: String? = null
-    }
+data class Country(
+        val ID: Int,
+        val Ccname: String,
+        val Cename: String,
+        val National_Flag: String,
+        val picUrl: String
+)
 
-    inner class GetChanneOnelList {
-        var id: Int = 0
-        var channel_Name: String? = null
-        var urL_GoTo: String? = null
-        var channelTwo: List<ChannelTwo>? = null
-    }
+data class AccountCatalog(
+        val ID: Int,
+        val parent_ID: Int,
+        val Channel_Name: String,
+        val Channel_Name_mobile: String,
+        val Channel_Name_English: String,
+        val Channel_icon: String,
+        val URL_GoTo: String
+)
 
-    inner class Account_Catalog {
-        var id: Int = 0
-        var parent_ID: Int = 0
-        var channel_Name: String? = null
-        var channel_Name_mobile: String? = null
-        var channel_Name_English: String? = null
-        var channel_icon: String? = null
-        var urL_GoTo: String? = null
-    }
+data class GetChanneOnel(
+        val ID: Int,
+        val Channel_Name: String,
+        val URL_GoTo: String,
+        val ChannelTwo: List<ChannelTwo>
+)
 
-    inner class Data {
-        var advert_Position: List<Advert_Position>? = null
-        var channeType: List<ChanneType>? = null
-        var country: List<Country>? = null
-        var member: List<Member>? = null
-        var getChanneOnelList: List<GetChanneOnelList>? = null
-        var account_Catalog: List<Account_Catalog>? = null
-    }
-}
+data class ChannelTwo(
+        val ID: Int,
+        val Channel_Name: String,
+        val URL_GoTo: String
+)

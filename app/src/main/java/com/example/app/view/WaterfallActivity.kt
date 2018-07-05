@@ -56,7 +56,7 @@ class WaterfallActivity : BaseTitleActivity() {
         manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         rlv.layoutManager = manager
         rlv.adapter = adater
-        adater.helper.attachToRecyclerView(rlv)//设置可滚动
+        adater.mItemTouchHelper.attachToRecyclerView(rlv)//设置可滚动
         rlv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)

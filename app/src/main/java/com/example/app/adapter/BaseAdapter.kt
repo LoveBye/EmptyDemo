@@ -1,10 +1,14 @@
 package com.example.app.adapter
 
+import android.app.Dialog
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.helper.ItemTouchHelper
+import android.view.Window
+import android.widget.TextView
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.chad.library.adapter.base.loadmore.SimpleLoadMoreView
+import com.example.app.R
 import com.example.app.utils.LogUtils
 import com.example.app.widget.OnItemCallbackListener
 import java.util.*
@@ -16,12 +20,13 @@ import java.util.*
  * @param <K>
 </K></T> */
 open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCallbackListener {
-
+    var mAlertDialog: Dialog? = null
     val callback = OnItemCallbackHelper()
+    var mCanSwipe = false
     /**
      * 实例化ItemTouchHelper对象,然后添加到RecyclerView
      */
-    val helper = ItemTouchHelper(callback)
+    val mItemTouchHelper = ItemTouchHelper(callback)
 
     constructor(layoutResId: Int, data: List<T>?) : super(layoutResId, data) {
         initAdapterDuang()
@@ -91,7 +96,8 @@ open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCa
          * 开始加载的位置
          * mAdapter.setStartUpFetchPosition(2);
          */
-//        adater.helper.attachToRecyclerView(rlv)//设置可滚动
+//        adater.helper.attachToRecyclerView(rlv)//设置可拖动
+//        canSwipe = true//设置可滑动删除
     }
 
 
@@ -109,7 +115,11 @@ open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCa
     }
 
     override fun onSwipe(position: Int) {
-        notifyItemChanged(position)//必须加这句话，如果不加，item水平滑动就滑丢了
+        if (mCanSwipe) {
+            showAlertDialog(position)
+        } else {
+            notifyItemChanged(position)//加这句，不然就滑没了
+        }
     }
 
     inner class OnItemCallbackHelper : ItemTouchHelper.Callback() {
@@ -127,5 +137,29 @@ open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCa
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
             onSwipe(viewHolder.adapterPosition)
         }
+    }
+
+    /**
+     * 显示提示框
+     */
+    fun showAlertDialog(position: Int) {
+        mAlertDialog = Dialog(mContext)
+        val window = mAlertDialog!!.window
+        mAlertDialog!!.requestWindowFeature(Window.FEATURE_NO_TITLE)//设置Dialog没有标题。需在setContentView之前设置，在之后设置会报错
+        window!!.setContentView(R.layout.base_dialog)
+        val tv_hint = window.findViewById<TextView>(R.id.tv_dialog_hint)
+        val tvConfirm = window.findViewById<TextView>(R.id.tv_dialog_confirm)
+        val tvCancel = window.findViewById<TextView>(R.id.tv_dialog_cancel)
+        tv_hint.setText("确定删除？")
+        tvCancel.setOnClickListener {
+            mAlertDialog!!.dismiss()
+            notifyItemChanged(position)
+        }
+        tvConfirm.setOnClickListener({
+            mAlertDialog!!.dismiss()
+            remove(position)
+            notifyItemRemoved(position)
+        })
+        mAlertDialog!!.show()
     }
 }

@@ -31,6 +31,7 @@ class MainActivity : BaseTitleActivity() {
         list.add(MySection(false, R.drawable.share_black, "RecyclerView", "瀑布流Activity"))
         list.add(MySection(false, R.drawable.share_black, "RxJava", "RxJava1Activity"))
         list.add(MySection(false, R.drawable.share_black, "Retrofit", "RetrofitActivity"))
+        list.add(MySection(false, R.drawable.share_black, "Picture", "UploadPictureActivity"))
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
         initDecoration(recycler_catalog, list)
@@ -50,8 +51,8 @@ class MainActivity : BaseTitleActivity() {
         return R.layout.activity_main
     }
 
-    inner class MyAdapter : BaseSectionAdapter<MySection, BaseViewHolder> {
-        constructor(layoutResId: Int, sectionHeadResId: Int, data: List<MySection>) : super(layoutResId, sectionHeadResId, data)
+    inner class MyAdapter(layoutResId: Int, sectionHeadResId: Int, data: List<MySection>)
+        : BaseSectionAdapter<MySection, BaseViewHolder>(layoutResId, sectionHeadResId, data) {
 
         override fun convertHead(helper: BaseViewHolder, item: MySection) {
             helper.setText(R.id.tv_name, item.title)
@@ -82,6 +83,10 @@ class MainActivity : BaseTitleActivity() {
                         startActivity(mIntent)
                     }
                     4 -> {
+                        mIntent.setClass(mContext, RetrofitActivity::class.java)
+                        startActivity(mIntent)
+                    }
+                    5 -> {
                         mIntent.setClass(mContext, RetrofitActivity::class.java)
                         startActivity(mIntent)
                     }

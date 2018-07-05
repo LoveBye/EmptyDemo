@@ -1,5 +1,6 @@
 package com.example.app.rxjava.module.rxjava2.usecases.flatMap;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.app.rxjava.model.FoodDetail;
@@ -42,6 +43,7 @@ public class RxCaseFlatMapActivity extends RxOperatorBaseActivity {
     /**
      * 该例子采用天狗网的健康食品API：http://www.tngou.net/doc/food
      */
+    @SuppressLint("CheckResult")
     @Override
     protected void doSomething() {
         Rx2AndroidNetworking.get("http://www.tngou.net/api/food/list")

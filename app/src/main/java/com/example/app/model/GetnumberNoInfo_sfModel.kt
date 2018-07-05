@@ -1,11 +1,13 @@
 package com.example.app.model
 
 import android.content.Context
-import android.util.Log
 import com.example.app.bean.GetnumberNoInfo_sfBean
+import com.example.app.utils.LogUtils
+import com.example.app.utils.ToastUtils
 import com.google.gson.Gson
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
+import io.reactivex.Observer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.functions.Consumer
 import io.reactivex.functions.Function
@@ -15,7 +17,11 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 
-class GetnumberNoInfo_sfModel(val context: Context) {
+class GetnumberNoInfo_sfModel(val context: Context) : Observable<Response>() {
+    override fun subscribeActual(observer: Observer<in Response>?) {
+
+    }
+
     val TAG = "TAG"
     fun getnumberNoInfo_sf(consumer: Consumer<GetnumberNoInfo_sfBean>) {
         //post方式提交的数据
@@ -33,15 +39,23 @@ class GetnumberNoInfo_sfModel(val context: Context) {
                     .newCall(builder)
                     .execute()
             e.onNext(response)
-        }).map(Function<Response, GetnumberNoInfo_sfBean> { response ->
-            val body = response.body()
-            return@Function Gson().fromJson(body!!.string(), GetnumberNoInfo_sfBean::class.java)
-        }).observeOn(AndroidSchedulers.mainThread())
+        })
+                .map(Function<Response, GetnumberNoInfo_sfBean> {
+                    try {
+                        if (it.isSuccessful()) {
+                            if (it.body() != null) {
+                                val fromJson = Gson().fromJson(it.body()!!.string(), GetnumberNoInfo_sfBean::class.java)
+                                LogUtils.showLog(context, "" + fromJson)
+                                return@Function fromJson
+                            }
+                        }
+                    } catch (e: Exception) {
+                        ToastUtils.showToast(context, e.toString())
+                    }
+                    return@Function null
+                })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(consumer, Consumer { throwable ->
-                    Log.e(TAG, "subscribe 线程:" + Thread.currentThread().name + "\n")
-                    Log.e(TAG, "失败：" + throwable.message + "\n")
-                })
+                .subscribe(consumer)
     }
 }

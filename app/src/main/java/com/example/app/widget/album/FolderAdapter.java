@@ -42,7 +42,7 @@ public class FolderAdapter extends RecyclerView.Adapter<FolderAdapter.ViewHolder
         holder.ivSelect.setVisibility(mSelectItem == position ? View.VISIBLE : View.GONE);
         if (images != null && !images.isEmpty()) {
             holder.tvFolderSize.setText(images.size() + "张");
-            GlideUtils.loadFile(mContext,
+            GlideUtils.INSTANCE.loadFile(mContext,
                     new File(images.get(0).getPath()),
                     holder.ivImage);
         } else {

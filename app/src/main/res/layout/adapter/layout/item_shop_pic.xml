@@ -1,0 +1,20 @@
+<com.zhy.autolayout.AutoRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+    <ImageView
+        android:id="@+id/iv"
+        android:layout_width="220px"
+        android:layout_height="220px"
+        android:adjustViewBounds="true"
+        android:scaleType="centerCrop"
+        android:src="@drawable/accountdefault" />
+
+    <ImageView
+        android:id="@+id/del"
+        android:layout_width="50px"
+        android:layout_height="50px"
+        android:layout_alignRight="@+id/iv"
+        android:background="@drawable/newdeleteimage" />
+</com.zhy.autolayout.AutoRelativeLayout>
