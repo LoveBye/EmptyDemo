@@ -120,17 +120,11 @@ open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCa
         }
 
         override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-            /**
-             * 回调
-             */
             onMove(viewHolder.adapterPosition, target.adapterPosition)
             return true
         }
 
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            /**
-             * 回调
-             */
             onSwipe(viewHolder.adapterPosition)
         }
     }

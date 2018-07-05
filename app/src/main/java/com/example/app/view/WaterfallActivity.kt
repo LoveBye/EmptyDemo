@@ -25,11 +25,11 @@ import kotlinx.android.synthetic.main.activity_waterfall.*
 import java.util.*
 
 class WaterfallActivity : BaseTitleActivity() {
-    private var dataList: ArrayList<TempBean> = ArrayList<TempBean>()
-    private var adater: MyAdapter = MyAdapter(R.layout.item_recycler_waterfall)
+    private val dataList: ArrayList<TempBean> = ArrayList<TempBean>()
+    private val adater: MyAdapter = MyAdapter(R.layout.item_recycler_waterfall)
     private var ITEM_COUNT = 20
     @SuppressLint("HandlerLeak")
-    private var handler: Handler =
+    private val handler: Handler =
             object : Handler() {     //此处的object 要加，否则无法重写 handlerMessage
                 override fun handleMessage(msg: Message?) {
                     super.handleMessage(msg)
