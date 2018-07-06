@@ -3,9 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
-    android:layout_margin="1dp">
+    android:layout_margin="1pt">
 
-    <com.example.app.imageselector.view.SquareImageView
+    <com.example.app.widget.album.SquareImageView
         android:id="@+id/iv_image"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -13,7 +13,7 @@
         android:background="#010101"
         android:scaleType="centerCrop" />
 
-    <com.example.app.imageselector.view.SquareImageView
+    <com.example.app.widget.album.SquareImageView
         android:id="@+id/iv_masking"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,7 +24,7 @@
         android:id="@+id/iv_select"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:padding="5dp"
+        android:padding="5pt"
         android:layout_gravity="right"
         android:src="@drawable/icon_image_un_select" />
 </FrameLayout>

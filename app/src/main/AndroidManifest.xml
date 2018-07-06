@@ -7,20 +7,13 @@
     <!--联网权限-->
     <uses-permission android:name="android.permission.INTERNET" />
     <application
+        android:name=".MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--Autolayout-->
-        <meta-data
-            android:name="design_width"
-            android:value="768" />
-        <meta-data
-            android:name="design_height"
-            android:value="1080" />
-
         <activity
             android:name=".view.MainActivity"
             android:label="@string/app_name"
@@ -148,5 +141,11 @@
 
         <activity android:name=".view.ImagePagerActivity" />
         <activity android:name=".view.UploadPictureActivity" />
+        <!--仿微信相册几个activity-->
+        <activity android:name=".widget.album.ImageSelectorActivity" />
+        <activity android:name=".widget.album.PreviewActivity" />
+        <activity android:name=".widget.album.ClipImageActivity" />
+        <activity android:name=".view.AutoLayoutActivity" />
+        <activity android:name=".view.ScreenAdaptorActivity" />
     </application>
 </manifest>

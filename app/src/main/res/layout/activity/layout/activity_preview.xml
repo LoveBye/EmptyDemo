@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/rl_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="48pt"
         android:background="#373c3d"
         android:clickable="true"
         android:orientation="vertical">
@@ -27,18 +27,18 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingLeft="10dp"
-                android:paddingRight="10dp"
+                android:paddingLeft="10pt"
+                android:paddingRight="10pt"
                 android:scaleType="centerInside"
                 android:src="@drawable/icon_back" />
 
         </FrameLayout>
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="1pt"
             android:layout_height="match_parent"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12pt"
+            android:layout_marginTop="12pt"
             android:layout_toRightOf="@+id/btn_back"
             android:background="@android:color/black" />
 
@@ -47,10 +47,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="10dp"
+            android:layout_marginLeft="10pt"
             android:layout_toRightOf="@+id/btn_back"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18pt" />
 
         <FrameLayout
             android:id="@+id/btn_confirm"
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="16dp"
+            android:layout_marginRight="16pt"
             android:foreground="@drawable/btn_foreground_selector">
 
             <TextView
@@ -67,14 +67,14 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_green_shape"
                 android:gravity="center"
-                android:minWidth="50dp"
-                android:paddingBottom="5dp"
-                android:paddingLeft="5dp"
-                android:paddingRight="5dp"
-                android:paddingTop="5dp"
+                android:minWidth="50pt"
+                android:paddingBottom="5pt"
+                android:paddingLeft="5pt"
+                android:paddingRight="5pt"
+                android:paddingTop="5pt"
                 android:text="确定"
                 android:textColor="@android:color/white"
-                android:textSize="14sp" />
+                android:textSize="14pt" />
 
         </FrameLayout>
 
@@ -83,7 +83,7 @@
     <RelativeLayout
         android:id="@+id/rl_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="48pt"
         android:layout_alignParentBottom="true"
         android:background="#373c3d"
         android:clickable="true">
@@ -94,19 +94,19 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:drawableLeft="@drawable/icon_image_un_select"
-            android:drawablePadding="10dp"
+            android:drawablePadding="10pt"
             android:gravity="center"
-            android:paddingLeft="12dp"
-            android:paddingRight="12dp"
+            android:paddingLeft="12pt"
+            android:paddingRight="12pt"
             android:text="选择"
             android:textColor="@android:color/white"
-            android:textSize="18sp" />
+            android:textSize="18pt" />
 
         <View
-            android:layout_width="1dp"
+            android:layout_width="1pt"
             android:layout_height="match_parent"
-            android:layout_marginBottom="15dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15pt"
+            android:layout_marginTop="15pt"
             android:layout_toLeftOf="@+id/tv_select"
             android:background="@android:color/black" />
     </RelativeLayout>

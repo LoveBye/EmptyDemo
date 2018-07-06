@@ -14,9 +14,9 @@
 
         <android.support.design.widget.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
+            android:layout_height="200pt"
             app:contentScrim="@color/skyblue"
-            app:expandedTitleMarginStart="100dp"
+            app:expandedTitleMarginStart="100pt"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
             app:statusBarScrim="@android:color/transparent"
             app:titleEnabled="false">
@@ -57,29 +57,29 @@
         android:id="@+id/toolbar_title"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
-        android:layout_marginLeft="16dp"
+        android:layout_marginLeft="16pt"
         android:alpha="0"
-        android:elevation="10dp"
+        android:elevation="10pt"
         android:fitsSystemWindows="true"
         android:gravity="center_vertical"
         android:text="这可能是RxJava 2.x最好的学习Demo"
         android:textColor="@android:color/white"
-        android:textSize="20sp"
+        android:textSize="20pt"
         android:textStyle="bold"
         app:layout_behavior="@string/simple_view_behavior"
         app:svb_dependOn="@id/home_appbar"
         app:svb_dependType="y"
         app:svb_targetAlpha="1"
-        app:svb_targetY="0dp" />
+        app:svb_targetY="0pt" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
-        android:layout_margin="16dp"
-        android:layout_marginBottom="32dp"
-        android:layout_marginRight="16dp"
+        android:layout_margin="16pt"
+        android:layout_marginBottom="32pt"
+        android:layout_marginRight="16pt"
         android:src="@mipmap/ic_launcher"
         app:layout_behavior="@string/translate_up_down_behavior"
         app:layout_scrollFlags="scroll|enterAlways|snap" />

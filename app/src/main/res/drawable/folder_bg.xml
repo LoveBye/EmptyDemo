@@ -2,24 +2,24 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:left="3dp"
-        android:top="3dp">
+        android:left="3pt"
+        android:top="3pt">
         <shape>
             <stroke
-                android:width="0.5dp"
+                android:width="0.5pt"
                 android:color="#757878" />
             <solid android:color="@android:color/white" />
         </shape>
     </item>
 
     <item
-        android:bottom="1.5dp"
-        android:left="1.5dp"
-        android:right="1.5dp"
-        android:top="1.5dp">
+        android:bottom="1.5pt"
+        android:left="1.5pt"
+        android:right="1.5pt"
+        android:top="1.5pt">
         <shape>
             <stroke
-                android:width="0.5dp"
+                android:width="0.5pt"
                 android:color="#757878" />
             <solid android:color="@android:color/white" />
         </shape>

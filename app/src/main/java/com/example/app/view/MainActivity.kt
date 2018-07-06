@@ -32,6 +32,8 @@ class MainActivity : BaseTitleActivity() {
         list.add(MySection(false, R.drawable.share_black, "RxJava", "RxJava1Activity"))
         list.add(MySection(false, R.drawable.share_black, "Retrofit", "RetrofitActivity"))
         list.add(MySection(false, R.drawable.share_black, "Picture", "UploadPictureActivity"))
+        list.add(MySection(false, R.drawable.share_black, "AutoLayout", "AutoLayoutActivity"))
+        list.add(MySection(false, R.drawable.share_black, "ScreenAdaptor", "ScreenAdaptorActivity"))
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
         initDecoration(recycler_catalog, list)
@@ -87,7 +89,15 @@ class MainActivity : BaseTitleActivity() {
                         startActivity(mIntent)
                     }
                     5 -> {
-                        mIntent.setClass(mContext, RetrofitActivity::class.java)
+                        mIntent.setClass(mContext, UploadPictureActivity::class.java)
+                        startActivity(mIntent)
+                    }
+                    6 -> {
+                        mIntent.setClass(mContext, AutoLayoutActivity::class.java)
+                        startActivity(mIntent)
+                    }
+                    7 -> {
+                        mIntent.setClass(mContext, ScreenAdaptorActivity::class.java)
                         startActivity(mIntent)
                     }
                     else -> ToastUtils.showToast(mContext, "" + data.indexOf(item))

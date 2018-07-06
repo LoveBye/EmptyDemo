@@ -8,14 +8,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/folder_bg"
-        android:layout_margin="10dp"
-        android:paddingRight="3dp"
-        android:paddingBottom="3dp">
+        android:layout_margin="10pt"
+        android:paddingRight="3pt"
+        android:paddingBottom="3pt">
 
         <ImageView
             android:id="@+id/iv_image"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="80pt"
+            android:layout_height="80pt"
             android:background="@android:color/white"
             android:scaleType="centerCrop" />
 
@@ -27,15 +27,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_centerVertical="true"
-        android:layout_marginRight="15dp"
+        android:layout_marginRight="15pt"
         android:src="@drawable/icon_image_select" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_marginLeft="5pt"
+        android:layout_marginRight="5pt"
         android:layout_toLeftOf="@+id/iv_select"
         android:layout_toRightOf="@+id/fl_folder"
         android:orientation="vertical">
@@ -46,25 +46,25 @@
             android:layout_height="wrap_content"
             android:singleLine="true"
             android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:textSize="16pt" />
 
         <TextView
             android:id="@+id/tv_folder_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginTop="3pt"
             android:singleLine="true"
             android:textColor="@android:color/darker_gray"
-            android:textSize="14sp" />
+            android:textSize="14pt" />
 
     </LinearLayout>
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1px"
+        android:layout_height="1pt"
         android:layout_below="@+id/fl_folder"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10pt"
+        android:layout_marginRight="10pt"
         android:background="@android:color/darker_gray" />
 
 </RelativeLayout>

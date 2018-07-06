@@ -17,5 +17,5 @@
         android:maxLines="1"
         android:text="南尘"
         android:textColor="@android:color/white"
-        android:textSize="18sp" />
+        android:textSize="18pt" />
 </android.support.v7.widget.Toolbar>

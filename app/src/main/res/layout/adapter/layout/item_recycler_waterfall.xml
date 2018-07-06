@@ -1,31 +1,31 @@
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/item_parent"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gainsboro">
 
-    <com.zhy.autolayout.AutoLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2px"
+        android:layout_margin="2pt"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="5px">
+        android:padding="5pt">
 
         <ImageView
             android:id="@+id/img_waterfall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="200px"
-            android:minHeight="150px"
+            android:maxHeight="200pt"
+            android:minHeight="150pt"
             android:src="@drawable/default_loading_pic" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20px"
-            android:text="" />
-    </com.zhy.autolayout.AutoLinearLayout>
-</com.zhy.autolayout.AutoLinearLayout>
+            android:padding="20pt"
+            android:text="123456789" />
+    </LinearLayout>
+</LinearLayout>

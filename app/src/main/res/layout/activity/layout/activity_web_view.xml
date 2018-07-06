@@ -27,7 +27,7 @@
                 android:ellipsize="end"
                 android:maxLines="1"
                 android:text="南尘"
-                android:textSize="18sp" />
+                android:textSize="18pt" />
 
         </android.support.v7.widget.Toolbar>
 
@@ -35,9 +35,9 @@
             android:id="@+id/web_progressBar"
             style="?android:attr/progressBarStyleHorizontal"
             android:layout_width="match_parent"
-            android:layout_height="1.5dp"
+            android:layout_height="1.5pt"
             android:layout_gravity="center"
-            android:paddingTop="0dp"
+            android:paddingTop="0pt"
             android:progressDrawable="@drawable/ic_launcher_background"
             android:visibility="visible" />
 

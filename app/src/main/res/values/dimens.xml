@@ -3,6 +3,6 @@
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="text_margin">16dp</dimen>
     <dimen name="title_text_size">16sp</dimen>
-    <dimen name="btn_top_5dp">5dp</dimen>
-    <dimen name="btn_top_10dp">10dp</dimen>
+    <dimen name="btn_top_5pt">5dp</dimen>
+    <dimen name="btn_top_10pt">10dp</dimen>
 </resources>

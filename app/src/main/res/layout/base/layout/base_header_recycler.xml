@@ -1,4 +1,4 @@
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/gainsboro"
@@ -9,29 +9,29 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:padding="10px"
+        android:padding="10pt"
         android:textColor="@color/skyblue"
-        android:textSize="12sp" />
+        android:textSize="34pt" />
 
-    <com.zhy.autolayout.AutoLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="50px"
-            android:layout_marginRight="50px"
+            android:layout_height="1pt"
+            android:layout_marginLeft="50pt"
+            android:layout_marginRight="50pt"
             android:layout_weight="1"
             android:background="@color/gainsboro" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1px"
-            android:layout_marginLeft="50px"
-            android:layout_marginRight="50px"
+            android:layout_height="1pt"
+            android:layout_marginLeft="50pt"
+            android:layout_marginRight="50pt"
             android:layout_weight="1"
             android:background="@color/gainsboro" />
-    </com.zhy.autolayout.AutoLinearLayout>
-</com.zhy.autolayout.AutoLinearLayout>
+    </LinearLayout>
+</LinearLayout>

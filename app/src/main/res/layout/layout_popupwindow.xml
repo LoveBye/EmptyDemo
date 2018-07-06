@@ -1,17 +1,17 @@
-<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/linear_view_group"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.zhy.autolayout.AutoLinearLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/mid_transparent_black"
         android:gravity="bottom"
         android:orientation="vertical"
-        android:padding="20px">
+        android:padding="20pt">
 
-        <com.zhy.autolayout.AutoLinearLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -22,36 +22,36 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="18dp"
+                android:padding="18pt"
                 android:text="相册"
                 android:textColor="@color/black" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1px"
+                android:layout_height="1pt"
                 android:background="@color/gray" />
 
             <TextView
                 android:id="@+id/tv_pop_camera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1dp"
+                android:layout_marginTop="1pt"
                 android:gravity="center"
-                android:padding="18dp"
+                android:padding="18pt"
                 android:text="拍摄"
                 android:textColor="@color/black" />
 
-        </com.zhy.autolayout.AutoLinearLayout>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tv_pop_cancle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10px"
+            android:layout_marginTop="10pt"
             android:background="@color/white"
             android:gravity="center"
-            android:padding="18dp"
+            android:padding="18pt"
             android:text="取消"
             android:textColor="@color/gray" />
-    </com.zhy.autolayout.AutoLinearLayout>
-</com.zhy.autolayout.AutoLinearLayout>
+    </LinearLayout>
+</LinearLayout>

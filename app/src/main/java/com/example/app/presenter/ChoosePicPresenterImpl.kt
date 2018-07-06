@@ -18,6 +18,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.PopupWindow
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
@@ -25,7 +26,6 @@ import com.example.app.R
 import com.example.app.utils.GlideUtils
 import com.example.app.utils.SPUtils
 import com.example.app.widget.album.ImageSelectorUtils
-import com.zhy.autolayout.AutoLinearLayout
 import java.io.*
 import java.util.*
 
@@ -78,7 +78,7 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
         mListImgviewAddress = ArrayList()
     }//只有单选
 
-    constructor(mLinearParent: AutoLinearLayout, activity: Activity, recyclerPic: RecyclerView) : super(activity) {
+    constructor(mLinearParent: LinearLayout, activity: Activity, recyclerPic: RecyclerView) : super(activity) {
         isMulti = true
         mActivity = activity
         mRecyclerPic = recyclerPic
@@ -94,18 +94,13 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
         mListImgviewAddress.add(mRecyclerPic!!.toString())
 
 
-        val callback = OnItemCallbackHelper()
-
-        /**
-         * 实例化ItemTouchHelper对象,然后添加到RecyclerView
-         */
-        val helper = ItemTouchHelper(callback)
-        helper.attachToRecyclerView(mRecyclerPic)
-        //
-        //        作者：爱小丽
-        //        链接：https://www.jianshu.com/p/fd67184f1aa2
-        //        來源：简书
-        //        著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+//        val callback = BaseAdapter.OnItemCallbackHelper()
+//
+//        /**
+//         * 实例化ItemTouchHelper对象,然后添加到RecyclerView
+//         */
+//        val helper = ItemTouchHelper(callback)
+//        mAdapterPic.hel.attachToRecyclerView(mRecyclerPic)
     }//包括多选
 
     fun chooseSinglePic(mLinearParent: View, mImgPerson0: ImageView) {
@@ -152,7 +147,6 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
             R.id.tv_pop_album//打开图库
             -> {
                 mPopWnd!!.dismiss()
-                val intent: Intent
                 if (isMulti) {
                     ImageSelectorUtils.openPhoto(mActivity, GET_PHOTO_FROM_ALBUM, false, 6 - mAdapterPic!!.data.size + 1)
                 } else {
@@ -162,8 +156,7 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
             R.id.tv_pop_camera//打开相机
             -> {
                 mPopWnd!!.dismiss()
-                val path = sdCardPath
-                val file = File("$path/temp.jpg")
+                val file = File("$sdCardPath/temp.jpg")
                 imageUri = Uri.fromFile(file)
                 val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)//action is capture
                 intent.putExtra("return-data", false)
@@ -209,7 +202,6 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
         } catch (e: Exception) {
             e.printStackTrace()
         }
-
     }
 
     /**
@@ -252,7 +244,7 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
         val tempTime = System.currentTimeMillis().toString() + ""
         val file = File("/mnt/sdcard/$tempTime.jpg")//将要保存图片的路径
         try {
-            var bos: BufferedOutputStream? = null
+            val bos: BufferedOutputStream
             bos = BufferedOutputStream(FileOutputStream(file))
             bitmap.compress(Bitmap.CompressFormat.JPEG, 100, bos)
             bos.flush()
@@ -260,6 +252,21 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
             val params = HashMap<String, String>()
             params["OP"] = "UpLoadpic"
             params["Member_ID"] = SPUtils.getPrefString(mActivity!!.applicationContext, "USER_ID", "")
+            dismissProgressDialog()
+            val view = mMapViews.get(mListImgviewAddress.get(position));
+            if (view is ImageView) {
+                GlideUtils.loadPic(mActivity,
+                        bitmap,
+                        view)
+            } else {
+                (view as RecyclerView).setAdapter(mAdapterPic);
+                mAdapterPic!!.getData().removeAt(mAdapterPic!!.getData().size - 1)
+                mAdapterPic!!.addData("")//临时加个临时图片
+                if (mAdapterPic!!.getData().size < 6)
+                    mAdapterPic!!.addData("")
+                setRecyclerTag(mAdapterPic!!.getData());//上传图片成功以后
+            }
+
             //            OkHttpUtils.post()
             //                    .params(params)
             //                    .url(SyncStateContract.Constants.LIVEpic)
