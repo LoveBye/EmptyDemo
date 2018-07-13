@@ -1,70 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <FrameLayout
-        android:id="@+id/fl_folder"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/folder_bg"
-        android:layout_margin="10pt"
-        android:paddingRight="3pt"
-        android:paddingBottom="3pt">
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <FrameLayout
+            android:id="@+id/fl_folder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="5pt"
+            android:background="@drawable/folder_bg"
+            android:paddingBottom="1pt"
+            android:paddingRight="1pt">
+
+            <ImageView
+                android:id="@+id/iv_image"
+                android:layout_width="40pt"
+                android:layout_height="40pt"
+                android:background="@android:color/white"
+                android:scaleType="centerCrop" />
+
+        </FrameLayout>
 
         <ImageView
-            android:id="@+id/iv_image"
-            android:layout_width="80pt"
-            android:layout_height="80pt"
-            android:background="@android:color/white"
-            android:scaleType="centerCrop" />
-
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/iv_select"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_centerVertical="true"
-        android:layout_marginRight="15pt"
-        android:src="@drawable/icon_image_select" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="5pt"
-        android:layout_marginRight="5pt"
-        android:layout_toLeftOf="@+id/iv_select"
-        android:layout_toRightOf="@+id/fl_folder"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/tv_folder_name"
+            android:id="@+id/iv_select"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:singleLine="true"
-            android:textColor="@android:color/black"
-            android:textSize="16pt" />
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="8pt"
+            android:src="@drawable/icon_image_select" />
 
-        <TextView
-            android:id="@+id/tv_folder_size"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3pt"
-            android:singleLine="true"
-            android:textColor="@android:color/darker_gray"
-            android:textSize="14pt" />
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="2pt"
+            android:layout_marginRight="2pt"
+            android:layout_toLeftOf="@+id/iv_select"
+            android:layout_toRightOf="@+id/fl_folder"
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/tv_folder_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:textColor="@android:color/black"
+                android:textSize="7pt" />
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1pt"
-        android:layout_below="@+id/fl_folder"
-        android:layout_marginLeft="10pt"
-        android:layout_marginRight="10pt"
-        android:background="@android:color/darker_gray" />
+            <TextView
+                android:id="@+id/tv_folder_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="1pt"
+                android:singleLine="true"
+                android:textColor="@android:color/darker_gray"
+                android:textSize="7pt" />
+        </LinearLayout>
 
-</RelativeLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5pt"
+            android:layout_below="@+id/fl_folder"
+            android:layout_marginLeft="5pt"
+            android:layout_marginRight="5pt"
+            android:background="@android:color/darker_gray" />
+    </RelativeLayout>
+</FrameLayout>

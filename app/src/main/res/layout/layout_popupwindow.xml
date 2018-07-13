@@ -9,7 +9,7 @@
         android:background="@color/mid_transparent_black"
         android:gravity="bottom"
         android:orientation="vertical"
-        android:padding="20pt">
+        android:padding="10pt">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -22,36 +22,40 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:padding="18pt"
+                android:padding="7pt"
                 android:text="相册"
-                android:textColor="@color/black" />
+                android:textColor="@color/black"
+                android:textSize="7pt" />
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="1pt"
-                android:background="@color/gray" />
+                android:layout_height="0.2pt"
+                android:background="@color/mid_transparent_black" />
 
             <TextView
                 android:id="@+id/tv_pop_camera"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="1pt"
                 android:gravity="center"
-                android:padding="18pt"
+                android:padding="7pt"
                 android:text="拍摄"
+                android:textColor="@color/black"
+                android:textSize="7pt" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2pt"
+                android:background="@color/mid_transparent_black" />
+
+            <TextView
+                android:id="@+id/tv_pop_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:gravity="center"
+                android:padding="7pt"
+                android:text="取消"
                 android:textColor="@color/black" />
-
         </LinearLayout>
-
-        <TextView
-            android:id="@+id/tv_pop_cancle"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10pt"
-            android:background="@color/white"
-            android:gravity="center"
-            android:padding="18pt"
-            android:text="取消"
-            android:textColor="@color/gray" />
     </LinearLayout>
 </LinearLayout>

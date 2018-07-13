@@ -3,8 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".rxjava.module.HomeActivity">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/home_appbar"
@@ -32,7 +31,7 @@
             <android.support.v7.widget.Toolbar
                 android:id="@+id/home_toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="?attr/actionBarSize"
+                android:layout_height="wrap_content"
                 app:layout_collapseMode="pin"
                 app:popupTheme="@style/AppTheme.PopupOverlay"
                 app:title="" />
@@ -56,7 +55,7 @@
     <TextView
         android:id="@+id/toolbar_title"
         android:layout_width="match_parent"
-        android:layout_height="?attr/actionBarSize"
+        android:layout_height="wrap_content"
         android:layout_marginLeft="16pt"
         android:alpha="0"
         android:elevation="10pt"
@@ -64,7 +63,7 @@
         android:gravity="center_vertical"
         android:text="这可能是RxJava 2.x最好的学习Demo"
         android:textColor="@android:color/white"
-        android:textSize="20pt"
+        android:textSize="7pt"
         android:textStyle="bold"
         app:layout_behavior="@string/simple_view_behavior"
         app:svb_dependOn="@id/home_appbar"

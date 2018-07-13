@@ -1,17 +1,20 @@
 package com.example.app.presenter
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.ContentResolver
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
 import android.support.v7.widget.GridLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.helper.ItemTouchHelper
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -24,6 +27,7 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.BaseViewHolder
 import com.example.app.R
 import com.example.app.utils.GlideUtils
+import com.example.app.utils.LogUtils
 import com.example.app.utils.SPUtils
 import com.example.app.widget.album.ImageSelectorUtils
 import java.io.*
@@ -43,41 +47,13 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
     private var mLinearParent: View? = null
     private var isMulti = false
 
-    private// 返回与当前 Java 应用程序相关的运行时对象
-    // 启动另一个进程来执行命令
-    val sdCardPath: String
-        get() {
-            val cmd = "cat /proc/mounts"
-            val run = Runtime.getRuntime()
-            try {
-                val p = run.exec(cmd)
-                val `in` = BufferedInputStream(p.inputStream)
-                val inBr = BufferedReader(InputStreamReader(`in`))
-                var lineStr = ""
-                while ((lineStr.equals(inBr.readLine())) != null) {
-                    if (lineStr.contains("sdcard") && lineStr.contains(".android_secure")) {
-                        val strArray = lineStr.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                        if (strArray != null && strArray.size >= 5) {
-                            return strArray[1].replace("/.android_secure",
-                                    "")
-                        }
-                    }
-                }
-                inBr.close()
-                `in`.close()
-            } catch (e: Exception) {
-                return Environment.getExternalStorageDirectory().path
-            }
-
-            return Environment.getExternalStorageDirectory().path
-        }
-
     constructor(activity: Activity) : super(activity) {
         mActivity = activity
         mMapViews = HashMap()
         mListImgviewAddress = ArrayList()
-    }//只有单选
+    }
 
+    //只有单选
     constructor(mLinearParent: LinearLayout, activity: Activity, recyclerPic: RecyclerView) : super(activity) {
         isMulti = true
         mActivity = activity
@@ -93,14 +69,9 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
         mMapViews[mRecyclerPic!!.toString()] = mRecyclerPic as View
         mListImgviewAddress.add(mRecyclerPic!!.toString())
 
-
-//        val callback = BaseAdapter.OnItemCallbackHelper()
-//
-//        /**
-//         * 实例化ItemTouchHelper对象,然后添加到RecyclerView
-//         */
-//        val helper = ItemTouchHelper(callback)
-//        mAdapterPic.hel.attachToRecyclerView(mRecyclerPic)
+        checkPermission(activity, Manifest.permission.CAMERA)
+        checkPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        checkPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
     }//包括多选
 
     fun chooseSinglePic(mLinearParent: View, mImgPerson0: ImageView) {
@@ -155,15 +126,28 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
             }
             R.id.tv_pop_camera//打开相机
             -> {
-                mPopWnd!!.dismiss()
-                val file = File("$sdCardPath/temp.jpg")
-                imageUri = Uri.fromFile(file)
-                val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)//action is capture
-                intent.putExtra("return-data", false)
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
-                intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
-                intent.putExtra("noFaceDetection", true)
-                mActivity!!.startActivityForResult(intent, RESULT_CAMERA_ONLY)
+                try {
+                    mPopWnd!!.dismiss()
+                    val path = getSDCardPath()
+                    val tempTime = System.currentTimeMillis().toString() + ""
+                    val file = File("$path/$tempTime.jpg")
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        //兼容android7.0 使用共享文件的形式
+                        val contentValues = ContentValues(1)
+                        contentValues.put(MediaStore.Images.Media.DATA, file.absolutePath)
+                        imageUri = mActivity!!.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+                    } else {
+                        imageUri = Uri.fromFile(file)
+                    }
+                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)//action is capture
+                    intent.putExtra("return-data", false)
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+                    intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString())
+                    intent.putExtra("noFaceDetection", true)
+                    mActivity!!.startActivityForResult(intent, RESULT_CAMERA_ONLY)
+                } catch (e: Exception) {
+                    LogUtils.showLog(mActivity!!.applicationContext, e.toString())
+                }
             }
             R.id.tv_pop_cancle -> mPopWnd!!.dismiss()
         }
@@ -185,7 +169,6 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
-
             }
             if (requestCode == GET_PHOTO_FROM_ALBUM && data != null) {
                 val images = data.getStringArrayListExtra(ImageSelectorUtils.SELECT_RESULT)
@@ -236,7 +219,8 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
 
     }
 
-    //将Bitmap转成文件并且上传至服务器，成功后拼成要上传的picArr
+    @SuppressLint("SdCardPath")
+//将Bitmap转成文件并且上传至服务器，成功后拼成要上传的picArr
     fun saveBitmapFile(position: Int, bitmap: Bitmap?) {
         if (bitmap == null)
             return
@@ -264,40 +248,8 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
                 mAdapterPic!!.addData("")//临时加个临时图片
                 if (mAdapterPic!!.getData().size < 6)
                     mAdapterPic!!.addData("")
-                setRecyclerTag(mAdapterPic!!.getData());//上传图片成功以后
+                setRecyclerTag(mAdapterPic!!.getData());
             }
-
-            //            OkHttpUtils.post()
-            //                    .params(params)
-            //                    .url(SyncStateContract.Constants.LIVEpic)
-            //                    .addFile("imgFile", tempTime + ".jpg", file)
-            //                    .build().execute(new CoverImageUrlCallBack() {
-            //                @Override
-            //                public void onError(Request request, Exception e) {
-            //                    dismissProgressDialog();
-            //                }
-            //
-            //                @Override
-            //                public void onResponse(CoverImageUrl response) {
-            //                    if (position < mListImgviewAddress.size()) {
-            //                        View view = mMapViews.get(mListImgviewAddress.get(position));
-            //                        if (view instanceof ImageView) {
-            //                            GlideUtils.loadPic(mActivity,
-            //                                    bitmap,
-            //                                    (ImageView) view);
-            //                            ((ImageView) view).setTag(response.getData().toString());
-            //                        } else {
-            //                            ((RecyclerView) view).setAdapter(mAdapterPic);
-            //                            mAdapterPic!!.getData().remove(mAdapterPic!!.getData().size() - 1);
-            //                            mAdapterPic!!.addData(response.getData().toString());
-            //                            if (mAdapterPic!!.getData().size() < 6)
-            //                                mAdapterPic!!.addData("");
-            //                            setRecyclerTag(mAdapterPic!!.getData());//上传图片成功以后
-            //                        }
-            //                    }
-            //                    dismissProgressDialog();
-            //                }
-            //            });
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -312,20 +264,6 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
         if (temp.length > 0)
             temp = temp.substring(0, temp.length - 1)
         mRecyclerPic!!.tag = temp
-    }
-
-    fun initRecyclerPics(picsArr: String?) {
-        mAdapterPic!!.data.clear()
-        if (picsArr != null && picsArr.length > 0 && picsArr.contains("|")) {
-            val split = picsArr.split("\\|".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-            for (i in split.indices) {
-                mAdapterPic!!.data.add(split[i])
-            }
-            mAdapterPic!!.notifyDataSetChanged()
-        }
-        if (mAdapterPic!!.data.size < 6)
-            mAdapterPic!!.data.add("")
-        setRecyclerTag(mAdapterPic!!.data)
     }
 
     inner class PicAdapter(context: Context) : BaseQuickAdapter<String, BaseViewHolder>(R.layout.item_shop_pic), OnItemCallbackListener {
@@ -349,7 +287,6 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
                     data.add("")
                 data.removeAt(data.indexOf(item))
                 notifyDataSetChanged()
-
                 setRecyclerTag(data)//删除某一项以后
             }
         }
@@ -364,11 +301,9 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
              * 通知数据移动
              */
             notifyItemMoved(fromPosition, toPosition)
-
             setRecyclerTag(data)//拖动排序后
         }
 
-        //
         override fun onSwipe(position: Int) {
 
         }
@@ -382,33 +317,6 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
         fun onMove(fromPosition: Int, toPosition: Int)
 
         fun onSwipe(position: Int)
-    }
-
-    private inner class OnItemCallbackHelper : ItemTouchHelper.Callback() {
-        override fun getMovementFlags(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder): Int {
-            val dragFlag = ItemTouchHelper.LEFT or ItemTouchHelper.DOWN or ItemTouchHelper.UP or ItemTouchHelper.RIGHT
-            val swipeFlag = ItemTouchHelper.START or ItemTouchHelper.END
-
-            return ItemTouchHelper.Callback.makeMovementFlags(dragFlag, swipeFlag)
-        }
-
-        override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder): Boolean {
-            /**
-             * 回调
-             */
-            if (mAdapterPic!!.data.size < 6 && (viewHolder.adapterPosition == mAdapterPic!!.data.size - 1 || target.adapterPosition == mAdapterPic!!.data.size - 1)) {
-            } else {
-                mAdapterPic!!.onMove(viewHolder.adapterPosition, target.adapterPosition)
-            }
-            return true
-        }
-
-        override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-            /**
-             * 回调
-             */
-            mAdapterPic!!.onSwipe(viewHolder.adapterPosition)
-        }
     }
 
     companion object {
@@ -435,5 +343,28 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
             }
             return data
         }
+    }
+
+    private fun getSDCardPath(): String {
+        val cmd = "cat /proc/mounts"
+        val run = Runtime.getRuntime()// 返回与当前 Java 应用程序相关的运行时对象
+        try {
+            val p = run.exec(cmd)// 启动另一个进程来执行命令
+            val `in` = BufferedInputStream(p.inputStream)
+            val inBr = BufferedReader(InputStreamReader(`in`))
+            val lineStr: String = inBr.readLine()
+            if (lineStr.contains("sdcard") && lineStr.contains(".android_secure")) {
+                val strArray = lineStr.split(" ".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
+                if (strArray.size >= 5) {
+                    return strArray[1].replace("/.android_secure", "")
+                }
+            }
+            inBr.close()
+            `in`.close()
+        } catch (e: Exception) {
+            return Environment.getExternalStorageDirectory().path
+        }
+
+        return Environment.getExternalStorageDirectory().path
     }
 }

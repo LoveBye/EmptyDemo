@@ -25,6 +25,7 @@ object GlideUtils {
     fun loadPic(context: Context?, imgUrl: String, imageView: ImageView) {
         val requestOptions = RequestOptions()
                 .centerCrop()
+                .dontAnimate()
                 .placeholder(R.drawable.default_loading_pic)
                 .error(R.drawable.default_loading_pic)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -43,6 +44,7 @@ object GlideUtils {
     fun loadPic(context: Context, resourceId: Int, imageView: ImageView) {
         val requestOptions = RequestOptions()
                 .centerCrop()
+                .dontAnimate()
                 .placeholder(R.drawable.default_loading_pic)
                 .error(R.drawable.default_loading_pic)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)
@@ -193,6 +195,7 @@ object GlideUtils {
      */
     fun loadFile(context: Context?, file: File, ivImage: ImageView) {
         val requestOptions = RequestOptions()
+                .dontAnimate()
                 .centerCrop()
                 .placeholder(R.drawable.default_loading_pic)
                 .error(R.drawable.default_loading_pic)
@@ -208,6 +211,7 @@ object GlideUtils {
     fun loadPic(context: Context?, bitmap: Bitmap, ivImage: ImageView) {
         val requestOptions = RequestOptions()
                 .centerCrop()
+                .dontAnimate()
                 .placeholder(R.drawable.default_loading_pic)
                 .error(R.drawable.default_loading_pic)
                 .diskCacheStrategy(DiskCacheStrategy.RESOURCE)

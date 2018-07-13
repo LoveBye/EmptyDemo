@@ -1,15 +1,22 @@
 package com.example.app.presenter
 
+import android.Manifest
+import android.app.Activity
 import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Context
+import android.content.pm.PackageManager
+import android.support.v4.app.ActivityCompat
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.Window
 import android.widget.TextView
 import com.example.app.R
+import com.example.app.bean.ImageModel
 import com.example.app.utils.ToastUtils
 
 abstract class BasePresenter {
+    val PERMISSION_REQUEST_CODE = 15//申请权限
     var mProgressDialog: ProgressDialog? = null
     var mAlertDialog: Dialog? = null
 
@@ -59,5 +66,22 @@ abstract class BasePresenter {
         tvCancel.setOnClickListener { mAlertDialog!!.dismiss() }
         tvConfirm.setOnClickListener(listener)
         mAlertDialog!!.show()
+    }
+
+    /**
+     * 检查权限并加载SD卡里的图片。
+     */
+    private fun checkPermission(activity: Activity, permission: String) {
+        //permission=Manifest.permission.WRITE_EXTERNAL_STORAGE
+
+        val hasWriteContactsPermission = ContextCompat.checkSelfPermission(activity.getApplication(), permission);
+        if (hasWriteContactsPermission == PackageManager.PERMISSION_GRANTED) {
+            //有权限
+//            ToastUtils.showToast(activity, "有权限")
+        } else {
+            //没有权限，申请权限。
+            val strings: Array<String> = arrayOf(permission)
+            ActivityCompat.requestPermissions(activity, strings, PERMISSION_REQUEST_CODE);
+        }
     }
 }

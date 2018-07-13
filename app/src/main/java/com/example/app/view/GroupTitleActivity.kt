@@ -26,9 +26,9 @@ class GroupTitleActivity : BaseTitleActivity() {
         val list = ArrayList<MySection>()
         for (i in 0..40) {
             if (i % 6 == 0) {
-                list.add(MySection(false, R.drawable.share_black, "分组" + i, "分组Activity"+ i))
+                list.add(MySection(i, false, R.drawable.share_black, "分组" + i, "分组Activity" + i))
             } else {
-                list.add(MySection(false, R.drawable.share_black, "", "分组Activity" + i))
+                list.add(MySection(i, false, R.drawable.share_black, "", "分组Activity" + i))
             }
         }
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
@@ -59,16 +59,16 @@ class GroupTitleActivity : BaseTitleActivity() {
 
         override fun convertHead(helper: BaseViewHolder, item: MySection) {
             helper.setText(R.id.tv_name, item.title)
-            helper.getView<TextView>(R.id.tv_name).setOnClickListener({
+            helper.getView<TextView>(R.id.tv_name).setOnClickListener {
                 ToastUtils.showToast(mContext, "" + data.indexOf(item))
-            })
+            }
         }
 
         override fun convert(helper: BaseViewHolder, item: MySection) {
             helper.setText(R.id.tv_name, item.content)
-            helper.getView<TextView>(R.id.tv_name).setOnClickListener({
+            helper.getView<TextView>(R.id.tv_name).setOnClickListener {
                 ToastUtils.showToast(mContext, "" + data.indexOf(item))
-            })
+            }
         }
     }
 

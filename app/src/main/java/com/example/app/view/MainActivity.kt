@@ -26,14 +26,16 @@ class MainActivity : BaseTitleActivity() {
         val layoutManager = LinearLayoutManager(this)
         recycler_catalog.layoutManager = layoutManager
         val list = ArrayList<MySection>()
-        list.add(MySection(false, R.drawable.share_black, "RecyclerView", "下拉放大Activity"))
-        list.add(MySection(false, R.drawable.share_black, "RecyclerView", "分组Activity"))
-        list.add(MySection(false, R.drawable.share_black, "RecyclerView", "瀑布流Activity"))
-        list.add(MySection(false, R.drawable.share_black, "RxJava", "RxJava1Activity"))
-        list.add(MySection(false, R.drawable.share_black, "Retrofit", "RetrofitActivity"))
-        list.add(MySection(false, R.drawable.share_black, "Picture", "UploadPictureActivity"))
-        list.add(MySection(false, R.drawable.share_black, "AutoLayout", "AutoLayoutActivity"))
-        list.add(MySection(false, R.drawable.share_black, "ScreenAdaptor", "ScreenAdaptorActivity"))
+        list.add(MySection(0, false, R.drawable.share_black, "RecyclerView", "下拉放大Activity"))
+        list.add(MySection(1, false, R.drawable.share_black, "RecyclerView", "分组Activity"))
+        list.add(MySection(2, false, R.drawable.share_black, "RecyclerView", "侧滑删除Activity"))
+        list.add(MySection(3, false, R.drawable.share_black, "RecyclerView", "瀑布流Activity"))
+        list.add(MySection(4, false, R.drawable.share_black, "RxJava", "RxJavaActivity"))
+        list.add(MySection(5, false, R.drawable.share_black, "Retrofit", "RetrofitActivity"))
+        list.add(MySection(6, false, R.drawable.share_black, "Picture", "UploadPictureActivity"))
+        list.add(MySection(7, false, R.drawable.share_black, "AutoLayout", "AutoLayoutActivity"))
+        list.add(MySection(8, false, R.drawable.share_black, "ScreenAdaptor", "ScreenAdaptorActivity"))
+        list.add(MySection(9, false, R.drawable.share_black, "VelocityTracker", "VelocityTrackerActivity"))
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
         initDecoration(recycler_catalog, list)
@@ -67,7 +69,7 @@ class MainActivity : BaseTitleActivity() {
             helper.setText(R.id.tv_name, item.content)
             helper.getView<TextView>(R.id.tv_name).setOnClickListener {
                 val mIntent = Intent()
-                when (data.indexOf(item)) {
+                when (item.id) {
                     0 -> {
                         mIntent.setClass(mContext, PullDownEnlargeActivity::class.java)
                         startActivity(mIntent)
@@ -77,27 +79,35 @@ class MainActivity : BaseTitleActivity() {
                         startActivity(mIntent)
                     }
                     2 -> {
-                        mIntent.setClass(mContext, WaterfallActivity::class.java)
+                        mIntent.setClass(mContext, SlidingDeleteActivity::class.java)
                         startActivity(mIntent)
                     }
                     3 -> {
-                        mIntent.setClass(mContext, RxJavaActivity::class.java)
+                        mIntent.setClass(mContext, WaterfallActivity::class.java)
                         startActivity(mIntent)
                     }
                     4 -> {
-                        mIntent.setClass(mContext, RetrofitActivity::class.java)
+                        mIntent.setClass(mContext, RxJavaActivity::class.java)
                         startActivity(mIntent)
                     }
                     5 -> {
-                        mIntent.setClass(mContext, UploadPictureActivity::class.java)
+                        mIntent.setClass(mContext, RetrofitActivity::class.java)
                         startActivity(mIntent)
                     }
                     6 -> {
-                        mIntent.setClass(mContext, AutoLayoutActivity::class.java)
+                        mIntent.setClass(mContext, UploadPictureActivity::class.java)
                         startActivity(mIntent)
                     }
                     7 -> {
+                        mIntent.setClass(mContext, AutoLayoutActivity::class.java)
+                        startActivity(mIntent)
+                    }
+                    8 -> {
                         mIntent.setClass(mContext, ScreenAdaptorActivity::class.java)
+                        startActivity(mIntent)
+                    }
+                    9 -> {
+                        mIntent.setClass(mContext, VelocityTrackerActivity::class.java)
                         startActivity(mIntent)
                     }
                     else -> ToastUtils.showToast(mContext, "" + data.indexOf(item))

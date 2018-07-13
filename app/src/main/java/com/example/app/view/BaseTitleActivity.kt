@@ -1,5 +1,6 @@
 package com.example.app.view
 
+import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +9,11 @@ import com.example.app.utils.ToastUtils
 import kotlinx.android.synthetic.main.base_layout_title.*
 
 abstract class BaseTitleActivity : BaseActivity(), View.OnClickListener {
-
+    lateinit var mActivity: Activity
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.base_layout_title)
+        mActivity = this
         val inflate = LayoutInflater.from(this).inflate(setLayoutResource(), null)
         view_content.addView(inflate)
 
@@ -40,7 +42,10 @@ abstract class BaseTitleActivity : BaseActivity(), View.OnClickListener {
     //点击事件
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.img_back -> ToastUtils.showToast(this, "点击了返回")
+            R.id.img_back -> {
+                ToastUtils.showToast(this, "点击了返回")
+                onBackPressed()
+            }
         }
     }
 }

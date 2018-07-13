@@ -7,25 +7,25 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="2pt"
+        android:layout_margin="1pt"
         android:background="@color/white"
         android:gravity="center"
         android:orientation="vertical"
-        android:padding="5pt">
+        android:padding="2pt">
 
         <ImageView
             android:id="@+id/img_waterfall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:maxHeight="200pt"
-            android:minHeight="150pt"
+            android:maxHeight="100pt"
+            android:minHeight="70pt"
             android:src="@drawable/default_loading_pic" />
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20pt"
+            android:padding="10pt"
             android:text="123456789" />
     </LinearLayout>
 </LinearLayout>

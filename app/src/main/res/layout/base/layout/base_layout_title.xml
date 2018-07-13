@@ -13,13 +13,16 @@
             android:id="@+id/view_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/white"
-            android:padding="5pt">
+            android:background="@color/white">
 
             <ImageView
                 android:id="@+id/img_back"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="22pt"
+                android:paddingBottom="5pt"
+                android:paddingLeft="8pt"
+                android:paddingRight="8pt"
+                android:paddingTop="5pt"
                 android:src="@drawable/back_black" />
 
             <TextView
@@ -27,8 +30,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
+                android:text="123456789"
                 android:textColor="@color/black"
-                android:textSize="34pt" />
+                android:textSize="8pt" />
 
             <ImageView
                 android:id="@+id/img_right"
@@ -40,14 +44,13 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="1pt"
+            android:layout_height="0.5pt"
             android:background="@color/gainsboro" />
 
         <FrameLayout
             android:id="@+id/view_content"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="2pt"
             android:background="@color/white" />
     </LinearLayout>
 </FrameLayout>

@@ -26,7 +26,7 @@ import java.util.*
 
 class WaterfallActivity : BaseTitleActivity() {
     private val dataList: ArrayList<TempBean> = ArrayList<TempBean>()
-    private val adater: MyAdapter = MyAdapter(R.layout.item_recycler_waterfall)
+    private val adapter: MyAdapter = MyAdapter(R.layout.item_recycler_waterfall)
     private var ITEM_COUNT = 20
     @SuppressLint("HandlerLeak")
     private val handler: Handler =
@@ -36,16 +36,16 @@ class WaterfallActivity : BaseTitleActivity() {
                     if (msg?.what == 0) {
                         if (dataList.size > ITEM_COUNT) {
                             if (ITEM_COUNT < 20) {
-                                adater.setNewData(dataList.subList(0, ITEM_COUNT))
+                                adapter.setNewData(dataList.subList(0, ITEM_COUNT))
                             } else {
                                 val subList = dataList.subList(ITEM_COUNT - 20, ITEM_COUNT)
-                                val size = adater.data.size
-                                adater.data.addAll(subList)
-                                adater.notifyItemInserted(size)
+                                val size = adapter.data.size
+                                adapter.data.addAll(subList)
+                                adapter.notifyItemInserted(size)
                             }
-                            adater.loadMoreComplete()
+                            adapter.loadMoreComplete()
                         } else {
-                            adater.loadMoreEnd()
+                            adapter.loadMoreEnd()
                         }
                     }
                 }
@@ -55,8 +55,8 @@ class WaterfallActivity : BaseTitleActivity() {
         val manager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         manager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         rlv.layoutManager = manager
-        rlv.adapter = adater
-        adater.mItemTouchHelper.attachToRecyclerView(rlv)//设置可滚动
+        rlv.adapter = adapter
+        adapter.mItemTouchHelper.attachToRecyclerView(rlv)//设置可滚动
         rlv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
@@ -72,14 +72,14 @@ class WaterfallActivity : BaseTitleActivity() {
     }
 
     override fun initListeners() {
-        adater.setOnLoadMoreListener({
+        adapter.setOnLoadMoreListener({
             ITEM_COUNT = ITEM_COUNT + 20
             handler.sendEmptyMessage(0)
         }, rlv)
     }
 
     override fun setTitle(): String {
-        return "RetrofitActivity"
+        return "瀑布流Activity"
     }
 
     override fun setLayoutResource(): Int {

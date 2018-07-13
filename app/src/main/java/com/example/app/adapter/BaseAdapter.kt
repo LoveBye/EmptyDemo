@@ -12,6 +12,8 @@ import com.example.app.R
 import com.example.app.utils.LogUtils
 import com.example.app.widget.OnItemCallbackListener
 import java.util.*
+import android.icu.lang.UCharacter.GraphemeClusterBreak.T
+
 
 /**
  * 基本用法：https://www.jianshu.com/p/1e20f301272e
@@ -103,22 +105,27 @@ open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCa
 
     //拖动
     override fun onMove(fromPosition: Int, toPosition: Int) {
-        LogUtils.showLog(mContext, "onMove->toPosition" + toPosition)
-        /**
-         * 在这里进行给原数组数据的移动
-         */
-        Collections.swap(mData, fromPosition, toPosition)
-        /**
-         * 通知数据移动
-         */
-        notifyItemMoved(fromPosition, toPosition)
+        try {
+            LogUtils.showLog(mContext, "onMove->fromPosition$fromPosition ->toPosition$toPosition")
+            /**
+             * 在这里进行给原数组数据的移动
+             */
+            Collections.swap(mData, fromPosition, toPosition)
+            /**
+             * 通知数据移动
+             */
+            notifyItemMoved(fromPosition, toPosition)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
     override fun onSwipe(position: Int) {
         if (mCanSwipe) {
             showAlertDialog(position)
         } else {
-            notifyItemChanged(position)//加这句，不然就滑没了
+//            notifyItemChanged(position)//加这句，不然就滑没了
+            notifyDataSetChanged()
         }
     }
 
@@ -153,13 +160,15 @@ open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCa
         tv_hint.setText("确定删除？")
         tvCancel.setOnClickListener {
             mAlertDialog!!.dismiss()
-            notifyItemChanged(position)
+//            notifyItemChanged(position)
+            notifyDataSetChanged()
         }
-        tvConfirm.setOnClickListener({
+        tvConfirm.setOnClickListener {
             mAlertDialog!!.dismiss()
             remove(position)
-            notifyItemRemoved(position)
-        })
+//            notifyItemRemoved(position)
+            notifyDataSetChanged()
+        }
         mAlertDialog!!.show()
     }
 }

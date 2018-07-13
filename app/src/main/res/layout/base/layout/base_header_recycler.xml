@@ -8,30 +8,8 @@
         android:id="@+id/tv_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        android:padding="10pt"
+        android:padding="5pt"
+        android:text="1234567890"
         android:textColor="@color/skyblue"
-        android:textSize="34pt" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1pt"
-            android:layout_marginLeft="50pt"
-            android:layout_marginRight="50pt"
-            android:layout_weight="1"
-            android:background="@color/gainsboro" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1pt"
-            android:layout_marginLeft="50pt"
-            android:layout_marginRight="50pt"
-            android:layout_weight="1"
-            android:background="@color/gainsboro" />
-    </LinearLayout>
+        android:textSize="7pt" />
 </LinearLayout>

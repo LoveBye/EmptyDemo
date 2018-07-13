@@ -13,22 +13,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="100pt"
+            android:layout_margin="10pt"
             android:background="@color/green"
-            android:padding="100pt"
+            android:padding="10pt"
             android:text="我的字体大小"
             android:textColor="@color/yellow"
-            android:textSize="20pt" />
+            android:textSize="10pt" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="100pt"
+            android:layout_margin="10pt"
             android:background="@color/green"
-            android:padding="100pt"
+            android:padding="10pt"
             android:text="我的字体大小"
             android:textColor="@color/yellow"
-            android:textSize="20pt" />
+            android:textSize="10pt" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -39,22 +39,22 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="100pt"
+            android:layout_margin="10pt"
             android:background="@color/green"
-            android:padding="100pt"
+            android:padding="10pt"
             android:text="我的字体大小"
             android:textColor="@color/yellow"
-            android:textSize="20pt" />
+            android:textSize="10pt" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="100pt"
+            android:layout_margin="10pt"
             android:background="@color/green"
-            android:padding="100pt"
+            android:padding="10pt"
             android:text="我的字体大小"
             android:textColor="@color/yellow"
-            android:textSize="20pt" />
+            android:textSize="10pt" />
 
         <ImageView
             android:layout_width="match_parent"
@@ -65,11 +65,11 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="100pt"
+            android:layout_margin="10pt"
             android:background="@color/green"
-            android:padding="100pt"
+            android:padding="10pt"
             android:text="@string/large_text"
             android:textColor="@color/yellow"
-            android:textSize="20pt" />
+            android:textSize="10pt" />
     </LinearLayout>
 </ScrollView>

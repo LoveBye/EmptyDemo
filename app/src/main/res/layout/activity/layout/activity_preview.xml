@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Myview
+    <com.example.app.widget.album.MyViewPager
         android:id="@+id/vp_image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/rl_top_bar"
         android:layout_width="match_parent"
-        android:layout_height="48pt"
+        android:layout_height="24pt"
         android:background="#373c3d"
         android:clickable="true"
         android:orientation="vertical">
@@ -58,7 +58,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginRight="16pt"
+            android:layout_marginRight="7pt"
             android:foreground="@drawable/btn_foreground_selector">
 
             <TextView
@@ -67,14 +67,13 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_green_shape"
                 android:gravity="center"
-                android:minWidth="50pt"
-                android:paddingBottom="5pt"
+                android:paddingBottom="2pt"
                 android:paddingLeft="5pt"
                 android:paddingRight="5pt"
-                android:paddingTop="5pt"
+                android:paddingTop="2pt"
                 android:text="确定"
                 android:textColor="@android:color/white"
-                android:textSize="14pt" />
+                android:textSize="7pt" />
 
         </FrameLayout>
 
@@ -83,7 +82,7 @@
     <RelativeLayout
         android:id="@+id/rl_bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="48pt"
+        android:layout_height="24pt"
         android:layout_alignParentBottom="true"
         android:background="#373c3d"
         android:clickable="true">
@@ -94,13 +93,13 @@
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
             android:drawableLeft="@drawable/icon_image_un_select"
-            android:drawablePadding="10pt"
+            android:drawablePadding="5pt"
             android:gravity="center"
-            android:paddingLeft="12pt"
-            android:paddingRight="12pt"
+            android:paddingLeft="5pt"
+            android:paddingRight="5pt"
             android:text="选择"
             android:textColor="@android:color/white"
-            android:textSize="18pt" />
+            android:textSize="7pt" />
 
         <View
             android:layout_width="1pt"
