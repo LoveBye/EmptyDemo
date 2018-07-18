@@ -26,16 +26,15 @@ class MainActivity : BaseTitleActivity() {
         val layoutManager = LinearLayoutManager(this)
         recycler_catalog.layoutManager = layoutManager
         val list = ArrayList<MySection>()
-        list.add(MySection(0, false, R.drawable.share_black, "RecyclerView", "下拉放大Activity"))
-        list.add(MySection(1, false, R.drawable.share_black, "RecyclerView", "分组Activity"))
-        list.add(MySection(2, false, R.drawable.share_black, "RecyclerView", "侧滑删除Activity"))
-        list.add(MySection(3, false, R.drawable.share_black, "RecyclerView", "瀑布流Activity"))
-        list.add(MySection(4, false, R.drawable.share_black, "RxJava", "RxJavaActivity"))
-        list.add(MySection(5, false, R.drawable.share_black, "Retrofit", "RetrofitActivity"))
-        list.add(MySection(6, false, R.drawable.share_black, "Picture", "UploadPictureActivity"))
-        list.add(MySection(7, false, R.drawable.share_black, "AutoLayout", "AutoLayoutActivity"))
-        list.add(MySection(8, false, R.drawable.share_black, "ScreenAdaptor", "ScreenAdaptorActivity"))
-        list.add(MySection(9, false, R.drawable.share_black, "VelocityTracker", "VelocityTrackerActivity"))
+        list.add(MySection(0, R.drawable.share_black, "RecyclerView", "下拉放大Activity"))
+        list.add(MySection(1, R.drawable.share_black, "RecyclerView", "分组Activity"))
+        list.add(MySection(2, R.drawable.share_black, "RecyclerView", "侧滑删除Activity"))
+        list.add(MySection(3, R.drawable.share_black, "RecyclerView", "瀑布流Activity"))
+        list.add(MySection(4, R.drawable.share_black, "RxJava", "RxJavaActivity"))
+        list.add(MySection(5, R.drawable.share_black, "Retrofit", "RetrofitActivity"))
+        list.add(MySection(6, R.drawable.share_black, "Picture", "UploadPictureActivity"))
+        list.add(MySection(7, R.drawable.share_black, "TextView", "TextViewActivity"))
+        list.add(MySection(8, R.drawable.share_black, "自定义View", "CameraActivity"))
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
         initDecoration(recycler_catalog, list)
@@ -99,15 +98,11 @@ class MainActivity : BaseTitleActivity() {
                         startActivity(mIntent)
                     }
                     7 -> {
-                        mIntent.setClass(mContext, AutoLayoutActivity::class.java)
+                        mIntent.setClass(mContext, TextViewActivity::class.java)
                         startActivity(mIntent)
                     }
                     8 -> {
-                        mIntent.setClass(mContext, ScreenAdaptorActivity::class.java)
-                        startActivity(mIntent)
-                    }
-                    9 -> {
-                        mIntent.setClass(mContext, VelocityTrackerActivity::class.java)
+                        mIntent.setClass(mContext, CameraActivity::class.java)
                         startActivity(mIntent)
                     }
                     else -> ToastUtils.showToast(mContext, "" + data.indexOf(item))

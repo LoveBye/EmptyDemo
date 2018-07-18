@@ -22,7 +22,7 @@ class PullDownEnlargeActivity : BaseActivity() {
         recycler_catalog.layoutManager = layoutManager
         val list = ArrayList<MySection>()
         for (i in 0..40) {
-            list.add(MySection(i, false, R.drawable.share_black, "Title" + i, "Content" + i))
+            list.add(MySection(i, R.drawable.share_black, "Title" + i, "Content" + i))
         }
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)

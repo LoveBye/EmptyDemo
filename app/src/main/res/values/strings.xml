@@ -1,5 +1,7 @@
 <resources>
     <string name="app_name">My Application</string>
+    <string name="from_html_text"><![CDATA[<h1>Hello World</h1>Here is an<img src="temp_5"><i>temp_5</i>.<br>And here is a<a href="http://www.baidu.com">link</a>.]]></string>
+    <string name="fraction_text"><![CDATA[1<afrc>1/2</afrc> + <afrc>11/16</afrc>= 2<afrc>3/16</afrc>]]></string>
     <string name="large_text">
         "Material is the metaphor.\n\n"
 

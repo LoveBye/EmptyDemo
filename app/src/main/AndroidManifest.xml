@@ -11,6 +11,13 @@
     <!--调摄像头-->
     <uses-permission android:name="android.permission.CAMERA" />
 
+    <!--自定义拍照-->
+    <uses-permission
+        android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"
+        tools:ignore="ProtectedPermissions" />
+    <!--添加相机和自动聚焦限权-->
+    <uses-feature android:name="android.hardware.camera.autofocus" />
+
     <application
         android:name=".MyApplication"
         android:allowBackup="true"
@@ -164,9 +171,8 @@
         <activity android:name=".widget.album.PreviewActivity" />
         <activity android:name=".widget.album.ClipImageActivity" />
 
-        <activity android:name=".view.AutoLayoutActivity" />
-        <activity android:name=".view.ScreenAdaptorActivity" />
-        <activity android:name=".view.VelocityTrackerActivity" />
         <activity android:name=".view.SlidingDeleteActivity" />
+        <activity android:name=".view.TextViewActivity" />
+        <activity android:name=".view.CameraActivity" />
     </application>
 </manifest>

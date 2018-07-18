@@ -106,7 +106,6 @@ open class BaseAdapter<T, K : BaseViewHolder> : BaseQuickAdapter<T, K>, OnItemCa
     //拖动
     override fun onMove(fromPosition: Int, toPosition: Int) {
         try {
-            LogUtils.showLog(mContext, "onMove->fromPosition$fromPosition ->toPosition$toPosition")
             /**
              * 在这里进行给原数组数据的移动
              */

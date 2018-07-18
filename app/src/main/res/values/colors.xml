@@ -151,4 +151,5 @@
     <color name="black">#000000</color><!--黑色 -->
     <color name="mid_transparent_black">#70000000</color><!--半透明 -->
     <color name="transparent">#00000000</color><!--透明色 -->
+    <color name="Black4">#121415</color>
 </resources>

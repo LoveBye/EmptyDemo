@@ -51,8 +51,8 @@ public class RxJavaActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) { // 4.4 以上版本
             // 设置 Toolbar 高度为 80dp，适配状态栏
             ViewGroup.LayoutParams layoutParams = mToolbarTitle.getLayoutParams();
-//            layoutParams.height = ScreenUtil.dip2px(this,ScreenUtil.getStatusBarHeight(this));
-            layoutParams.height = ScreenUtil.dip2px(this, 80);
+            layoutParams.height = ScreenUtil.dip2px(this,ScreenUtil.getStatusBarHeight(this));
+//            layoutParams.height = ScreenUtil.dip2px(this, 40);
             mToolbarTitle.setLayoutParams(layoutParams);
         }
 

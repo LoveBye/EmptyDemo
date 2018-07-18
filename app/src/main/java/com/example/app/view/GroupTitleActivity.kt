@@ -15,9 +15,7 @@ import com.gavin.com.library.listener.PowerGroupListener
 import kotlinx.android.synthetic.main.activity_group_title.*
 
 class GroupTitleActivity : BaseTitleActivity() {
-
     override fun initListeners() {
-
     }
 
     override fun initViews() {
@@ -26,17 +24,13 @@ class GroupTitleActivity : BaseTitleActivity() {
         val list = ArrayList<MySection>()
         for (i in 0..40) {
             if (i % 6 == 0) {
-                list.add(MySection(i, false, R.drawable.share_black, "分组" + i, "分组Activity" + i))
+                list.add(MySection(i, R.drawable.share_black, "分组" + i, "分组Activity" + i))
             } else {
-                list.add(MySection(i, false, R.drawable.share_black, "", "分组Activity" + i))
+                list.add(MySection(i, R.drawable.share_black, "分组", "分组Activity" + i))
             }
         }
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
-//        val img = ImageView(this)
-//        img.setImageResource(R.drawable.default_loading_pic)
-//        mAdapter.setHeaderView(img)
-//        recycler_catalog.setZoomView(img)
         initDecoration(recycler_catalog, list)
     }
 
@@ -54,9 +48,7 @@ class GroupTitleActivity : BaseTitleActivity() {
         return R.layout.activity_group_title
     }
 
-    inner class MyAdapter : BaseSectionAdapter<MySection, BaseViewHolder> {
-        constructor(layoutResId: Int, sectionHeadResId: Int, data: List<MySection>) : super(layoutResId, sectionHeadResId, data)
-
+    inner class MyAdapter(layoutResId: Int, sectionHeadResId: Int, data: List<MySection>) : BaseSectionAdapter<MySection, BaseViewHolder>(layoutResId, sectionHeadResId, data) {
         override fun convertHead(helper: BaseViewHolder, item: MySection) {
             helper.setText(R.id.tv_name, item.title)
             helper.getView<TextView>(R.id.tv_name).setOnClickListener {
@@ -93,14 +85,12 @@ class GroupTitleActivity : BaseTitleActivity() {
                         if (dataList.size > position) {
                             val view = layoutInflater.inflate(R.layout.base_header_recycler, null, false)
                             view.findViewById<TextView>(R.id.tv_name).setText(dataList[position].title)
-//                            view.findViewById<ImageView>(R.id.iv_left).setImageResource(dataList[position].icon)
                             return view
                         } else {
                             return null
                         }
                     }
-                })
-                .setGroupHeight(100)
+                }).setGroupHeight(100)
                 .build()
         rlv.addItemDecoration(decoration)
     }

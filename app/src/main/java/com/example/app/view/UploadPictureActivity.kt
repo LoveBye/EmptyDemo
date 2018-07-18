@@ -7,9 +7,18 @@ import kotlinx.android.synthetic.main.activity_upload_picture.*
 import android.R.attr.bitmap
 import android.graphics.Bitmap
 import android.R.attr.bitmap
+import android.graphics.Color
 import android.graphics.Rect
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
+import android.text.Spannable
+import android.text.style.ForegroundColorSpan
+import android.text.style.ClickableSpan
+import android.text.style.UnderlineSpan
+import android.text.SpannableStringBuilder
+import android.util.Log
+import android.view.View
+import com.example.app.utils.ToastUtils
 
 
 class UploadPictureActivity : BaseTitleActivity() {

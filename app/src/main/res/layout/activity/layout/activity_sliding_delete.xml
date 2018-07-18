@@ -1,14 +1,4 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.example.app.widget.SlidingDeleteRecyclerView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recycler_sliding"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <com.example.app.widget.SlidingDeleteRecyclerView
-            android:id="@+id/recycler_sliding"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-    </RelativeLayout>
-</FrameLayout>
+    android:layout_height="match_parent" />
