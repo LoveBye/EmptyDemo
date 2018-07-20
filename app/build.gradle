@@ -7,7 +7,7 @@ android {
     defaultConfig {
         applicationId "com.example.app"
         minSdkVersion 15
-        targetSdkVersion 27
+        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -20,6 +20,8 @@ android {
     }
     sourceSets {
         main {
+            jniLibs.srcDirs = ['src/jniLibs'];
+            jni.srcDirs = []
             res.srcDirs = [
                     'src/main/res/layout/activity',
                     'src/main/res/layout/adapter',
@@ -33,6 +35,7 @@ android {
 
 dependencies {
     api fileTree(dir: 'libs', include: ['*.jar'])
+    //noinspection GradleCompatible
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support:design:27.1.1'
     testImplementation 'junit:junit:4.12'

@@ -1,8 +1,8 @@
 package com.example.app.view;
 
-import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,12 +11,16 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -24,16 +28,32 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
+import com.chad.library.adapter.base.BaseViewHolder;
 import com.example.app.AppConstant;
 import com.example.app.R;
+import com.example.app.smalllib.AutoVBRMode;
+import com.example.app.smalllib.BaseMediaBitrateConfig;
+import com.example.app.smalllib.MediaObject;
+import com.example.app.smalllib.MediaRecorderBase;
+import com.example.app.smalllib.MediaRecorderConfig;
+import com.example.app.smalllib.MediaRecorderNative;
+import com.example.app.smalllib.ProgressView;
+import com.example.app.smalllib.VCamera;
 import com.example.app.utils.BitmapUtils;
 import com.example.app.utils.CameraUtil;
+import com.example.app.utils.FileUtils;
+import com.example.app.utils.GlideUtils;
+import com.example.app.utils.LogUtils;
+import com.example.app.utils.StringUtils;
 import com.example.app.utils.SystemUtils;
+import com.yixia.videoeditor.adapter.UtilityAdapter;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.BreakIterator;
 
-public class CameraActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener {
+public class CameraActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, MediaRecorderBase.OnErrorListener, MediaRecorderBase.OnEncodeListener, MediaRecorderBase.OnPreparedListener {
     private Camera mCamera;
     private SurfaceView surfaceView;
     private SurfaceHolder mHolder;
@@ -45,13 +65,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     private int screenHeight;
     private LinearLayout home_custom_top_relative;
     private ImageView camera_delay_time;
-    private View homeCustom_cover_top_view;
-    private View homeCustom_cover_bottom_view;
-    private View home_camera_cover_top_view;
-    private View home_camera_cover_bottom_view;
     private ImageView flash_light;
     private TextView camera_delay_time_text;//延迟拍照倒计时
-    private ImageView camera_square;
     private int index;
     //底部高度 主要是计算切换正方形时的动画高度
     private int menuPopviewHeight;
@@ -69,6 +84,43 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     private RelativeLayout homecamera_bottom_relative;
     private ImageView img_camera;
     private int picHeight;
+    private RecyclerView recycler_pic;
+    private MyAdapter mAdapterPic;
+
+    //长按录制
+    private MediaRecorderNative mMediaRecorder;
+    private MediaObject mMediaObject;
+    /**
+     * 录制最长时间
+     */
+    private static int RECORD_TIME_MAX = 6 * 1000;
+    /**
+     * 是否是点击状态
+     */
+    private volatile boolean mPressedStatus;
+    /**
+     * 延迟拍摄停止
+     */
+    private static final int HANDLE_STOP_RECORD = 1;
+    /**
+     * 回删按钮、延时按钮、滤镜按钮
+     */
+    private TextView mRecordDelete;
+    /**
+     * 录制进度
+     */
+    private ProgressView mProgressView;
+    /**
+     * 录制最小时间
+     */
+    private static int RECORD_TIME_MIN = (int) (1.5f * 1000);
+    /**
+     * 刷新进度条
+     */
+    private static final int HANDLE_INVALIDATE_PROGRESS = 0;
+    //录制完成点击确定
+    private TextView mTitleNext;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +128,29 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         setContentView(R.layout.activity_camera);
         context = this;
         initView();
+        initCameraData();
         initData();
+        initMediaRecorder();
+    }
+
+    private void initData() {
+        Intent intent = getIntent();
+        MediaRecorderConfig mediaRecorderConfig = getMediaRecorderConfig();
+        if (mediaRecorderConfig == null) {
+            return;
+        }
+        RECORD_TIME_MAX = mediaRecorderConfig.getRecordTimeMax();
+        RECORD_TIME_MIN = mediaRecorderConfig.getRecordTimeMin();
+        MediaRecorderBase.MAX_FRAME_RATE = mediaRecorderConfig.getMaxFrameRate();
+        MediaRecorderBase.MIN_FRAME_RATE = mediaRecorderConfig.getMinFrameRate();
+        MediaRecorderBase.SMALL_VIDEO_HEIGHT = mediaRecorderConfig.getSmallVideoHeight();
+        MediaRecorderBase.SMALL_VIDEO_WIDTH = mediaRecorderConfig.getSmallVideoWidth();
+        MediaRecorderBase.mVideoBitrate = mediaRecorderConfig.getVideoBitrate();
+        MediaRecorderBase.mediaRecorderConfig = mediaRecorderConfig.getMediaBitrateConfig();
+        MediaRecorderBase.compressConfig = mediaRecorderConfig.getCompressConfig();
+        MediaRecorderBase.CAPTURE_THUMBNAILS_TIME = mediaRecorderConfig.getCaptureThumbnailsTime();
+        MediaRecorderBase.doH264Compress = mediaRecorderConfig.isDoH264Compress();
+//        GO_HOME = mediaRecorderConfig.isGO_HOME();
     }
 
     private void initView() {
@@ -85,6 +159,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         mHolder.addCallback(this);
         img_camera = (ImageView) findViewById(R.id.img_camera);
         img_camera.setOnClickListener(this);
+        img_camera.setOnTouchListener(mOnVideoControllerTouchListener);
 
         //关闭相机界面按钮
         camera_close = (ImageView) findViewById(R.id.camera_close);
@@ -102,31 +177,27 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         camera_delay_time = (ImageView) findViewById(R.id.camera_delay_time);
         camera_delay_time.setOnClickListener(this);
 
-        //正方形切换
-        camera_square = (ImageView) findViewById(R.id.camera_square);
-        camera_square.setOnClickListener(this);
-
-        //切换正方形时候的动画
-        homeCustom_cover_top_view = findViewById(R.id.homeCustom_cover_top_view);
-        homeCustom_cover_bottom_view = findViewById(R.id.homeCustom_cover_bottom_view);
-
-        homeCustom_cover_top_view.setAlpha(0.5f);
-        homeCustom_cover_bottom_view.setAlpha(0.5f);
-
-        //拍照时动画
-        home_camera_cover_top_view = findViewById(R.id.home_camera_cover_top_view);
-        home_camera_cover_bottom_view = findViewById(R.id.home_camera_cover_bottom_view);
-        home_camera_cover_top_view.setAlpha(1);
-        home_camera_cover_bottom_view.setAlpha(1);
-
         //闪光灯
         flash_light = (ImageView) findViewById(R.id.flash_light);
         flash_light.setOnClickListener(this);
         camera_delay_time_text = (TextView) findViewById(R.id.camera_delay_time_text);
         homecamera_bottom_relative = (RelativeLayout) findViewById(R.id.homecamera_bottom_relative);
+
+        //删除
+        mRecordDelete = findViewById(R.id.record_delete);
+        mRecordDelete.setOnClickListener(this);
+
+        //录制进度条
+        mProgressView = (ProgressView) findViewById(R.id.record_progress);
+
+        mTitleNext = (TextView) findViewById(R.id.title_next);
+        mTitleNext.setOnClickListener(this);
+        mProgressView.setMaxDuration(RECORD_TIME_MAX);
+        mProgressView.setMinTime(RECORD_TIME_MIN);
+
     }
 
-    private void initData() {
+    private void initCameraData() {
         DisplayMetrics dm = context.getResources().getDisplayMetrics();
         screenWidth = dm.widthPixels;
         screenHeight = dm.heightPixels;
@@ -214,15 +285,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
                     isview = false;
                 }
                 break;
-
-            case R.id.camera_square:
-                if (index == 0) {
-                    camera_square_0();
-                } else if (index == 1) {
-                    camera_square_1();
-                }
-                break;
-
             //前后置摄像头拍照
             case R.id.camera_frontback:
                 switchCamera();
@@ -300,6 +362,24 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
                         break;
 
                 }
+                break;
+            //录制视频删除
+            case R.id.record_delete:
+                if (mMediaObject != null) {
+                    MediaObject.MediaPart part = mMediaObject.getCurrentPart();
+                    if (part != null) {
+                        if (part.remove) {
+                            part.remove = false;
+//                        mRecordDelete.setChecked(false);
+                            if (mProgressView != null)
+                                mProgressView.invalidate();
+                        }
+                    }
+                }
+                break;
+            case R.id.title_next:
+                mMediaRecorder.startEncoding();
+                break;
         }
     }
 
@@ -313,62 +393,6 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
         }
     }
 
-    /**
-     * 正方形拍摄
-     */
-    public void camera_square_0() {
-        camera_square.setImageResource(R.drawable.btn_camera_size1_n);
-        //属性动画
-        ValueAnimator anim = ValueAnimator.ofInt(0, animHeight);
-        anim.setDuration(300);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int currentValue = Integer.parseInt(animation.getAnimatedValue().toString());
-                RelativeLayout.LayoutParams Params = new RelativeLayout.LayoutParams(screenWidth, currentValue);
-                Params.setMargins(0, SystemUtils.dp2px(context, 44), 0, 0);
-                homeCustom_cover_top_view.setLayoutParams(Params);
-
-                RelativeLayout.LayoutParams bottomParams = new RelativeLayout.LayoutParams(screenWidth, currentValue);
-                bottomParams.setMargins(0, screenHeight - menuPopviewHeight - currentValue, 0, 0);
-                homeCustom_cover_bottom_view.setLayoutParams(bottomParams);
-            }
-
-        });
-        anim.start();
-
-        homeCustom_cover_top_view.bringToFront();
-        home_custom_top_relative.bringToFront();
-        homeCustom_cover_bottom_view.bringToFront();
-        index++;
-    }
-
-    /**
-     * 长方形方形拍摄
-     */
-    public void camera_square_1() {
-        camera_square.setImageResource(R.drawable.btn_camera_size2_n);
-
-        ValueAnimator anim = ValueAnimator.ofInt(animHeight, 0);
-        anim.setDuration(300);
-        anim.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-            @Override
-            public void onAnimationUpdate(ValueAnimator animation) {
-                int currentValue = Integer.parseInt(animation.getAnimatedValue().toString());
-                RelativeLayout.LayoutParams Params = new RelativeLayout.LayoutParams(screenWidth, currentValue);
-                Params.setMargins(0, SystemUtils.dp2px(context, 44), 0, 0);
-                homeCustom_cover_top_view.setLayoutParams(Params);
-
-                RelativeLayout.LayoutParams bottomParams = new RelativeLayout.LayoutParams(screenWidth, currentValue);
-                bottomParams.setMargins(0, screenHeight - menuPopviewHeight - currentValue, 0, 0);
-                homeCustom_cover_bottom_view.setLayoutParams(bottomParams);
-            }
-        });
-        anim.start();
-        index = 0;
-    }
-
-
     @Override
     protected void onResume() {
         super.onResume();
@@ -378,12 +402,23 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
                 startPreview(mCamera, mHolder);
             }
         }
+        UtilityAdapter.freeFilterParser();
+        UtilityAdapter.initFilterParser();
+        if (mMediaRecorder == null) {
+            initMediaRecorder();
+        } else {
+            mMediaRecorder.prepare();
+            mProgressView.setData(mMediaObject);
+        }
     }
 
     @Override
     protected void onPause() {
         super.onPause();
         releaseCamera();
+
+        stopRecord();
+        UtilityAdapter.freeFilterParser();
     }
 
     /**
@@ -457,6 +492,8 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
                 Log.e("bitmapWidth==", bitmap.getWidth() + "");
                 Log.e("bitmapHeight==", bitmap.getHeight() + "");
 
+                notifyRecyclerView(img_path);
+
                 //拍完一张可以继续拍
                 releaseCamera();
                 mCamera = getCamera(mCameraId);
@@ -466,6 +503,7 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
             }
         });
     }
+
 
     /**
      * 设置
@@ -522,5 +560,313 @@ public class CameraActivity extends Activity implements SurfaceHolder.Callback, 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
         releaseCamera();
+    }
+
+    private void notifyRecyclerView(String path) {
+        if (recycler_pic == null) {
+            recycler_pic = findViewById(R.id.recycler_pic);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            recycler_pic.setLayoutManager(layoutManager);
+            mAdapterPic = new MyAdapter(R.layout.item_shop_pic);
+            recycler_pic.setAdapter(mAdapterPic);
+        }
+        mAdapterPic.addData(path);
+    }
+
+    @Override
+    public void onVideoError(int what, int extra) {
+
+    }
+
+    @Override
+    public void onAudioError(int what, String message) {
+
+    }
+
+    @Override
+    public void onEncodeStart() {
+        showProgress("", "压缩中", -1);
+    }
+
+    @Override
+    public void onEncodeProgress(int progress) {
+        //压缩或转码进度
+        Log.e("TAGresponse", "" + progress);
+    }
+
+    @Override
+    public void onEncodeComplete() {
+        hideProgress();
+        Intent intent = null;
+//        try {
+//            intent = new Intent(this, Class.forName(getIntent().getStringExtra(OVER_ACTIVITY_NAME)));
+//            intent.putExtra(OUTPUT_DIRECTORY, mMediaObject.getOutputDirectory());
+//            if (compressConfig != null) {
+//                intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempTranscodingVideoPath());
+//            } else {
+//                intent.putExtra(MediaRecorderActivity.VIDEO_URI, mMediaObject.getOutputTempVideoPath());
+//            }
+//            intent.putExtra(MediaRecorderActivity.VIDEO_SCREENSHOT, mMediaObject.getOutputVideoThumbPath());
+//            intent.putExtra("go_home", GO_HOME);
+////            startActivity(intent);
+//            this.setResult(0, intent);
+//
+//
+//        } catch (ClassNotFoundException e) {
+//            throw new IllegalArgumentException("需要传入录制完成后跳转的Activity的全类名");
+//        }
+
+        finish();
+    }
+
+    @Override
+    public void onEncodeError() {
+        hideProgress();
+        Toast.makeText(this, "转码失败", Toast.LENGTH_SHORT).show();
+        finish();
+    }
+
+    @Override
+    public void onPrepared() {
+        releaseCamera();
+        mCamera = getCamera(mCameraId);
+        if (mHolder != null) {
+            startPreview(mCamera, mHolder);
+        }
+    }
+
+    class MyAdapter extends BaseQuickAdapter<String, BaseViewHolder> {
+        MyAdapter(int layoutResId) {
+            super(layoutResId);
+        }
+
+        @Override
+        protected void convert(BaseViewHolder helper, final String item) {
+            GlideUtils.INSTANCE.loadPic(mContext, item, (ImageView) helper.getView(R.id.iv));
+            helper.getView(R.id.del).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    remove(getData().indexOf(item));
+                    notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    /**
+     * 初始化拍摄SDK
+     */
+    private void initMediaRecorder() {
+        try {
+            mMediaRecorder = new MediaRecorderNative();
+
+            mMediaRecorder.setOnErrorListener(this);
+            mMediaRecorder.setOnEncodeListener(this);
+            mMediaRecorder.setOnPreparedListener(this);
+
+            File f = new File(VCamera.getVideoCachePath());
+            if (!FileUtils.checkFile(f)) {
+                f.mkdirs();
+            }
+            String key = String.valueOf(System.currentTimeMillis());
+            mMediaObject = mMediaRecorder.setOutputDirectory(key,
+                    VCamera.getVideoCachePath() + key);
+            mMediaRecorder.setSurfaceHolder(surfaceView.getHolder());
+            mMediaRecorder.prepare();
+        } catch (Exception e) {
+            e.printStackTrace();
+            LogUtils.INSTANCE.showLog(this, e.toString());
+        }
+    }
+    //长按录制
+    /**
+     * 点击屏幕录制
+     */
+    private View.OnTouchListener mOnVideoControllerTouchListener = new View.OnTouchListener() {
+
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            if (mMediaRecorder == null) {
+                return false;
+            }
+            switch (event.getAction()) {
+                case MotionEvent.ACTION_DOWN:
+                    // 检测是否手动对焦
+                    // 判断是否已经超时
+                    if (mMediaObject.getDuration() >= RECORD_TIME_MAX) {
+                        return true;
+                    }
+                    // 取消回删
+                    if (cancelDelete())
+                        return true;
+                    startRecord();
+                    break;
+                case MotionEvent.ACTION_UP:
+                    // 暂停
+                    if (mPressedStatus) {
+                        stopRecord();
+                        // 检测是否已经完成
+                        if (mMediaObject.getDuration() >= RECORD_TIME_MAX) {
+                            mTitleNext.performClick();
+                        }
+                    }
+                    break;
+            }
+            return true;
+        }
+    };
+
+    /**
+     * 停止录制
+     */
+    private void stopRecord() {
+        mPressedStatus = false;
+        img_camera.animate().scaleX(1).scaleY(1).setDuration(500).start();
+
+        if (mMediaRecorder != null) {
+            mMediaRecorder.stopRecord();
+        }
+
+        mRecordDelete.setVisibility(View.VISIBLE);
+        flash_light.setEnabled(true);
+        camera_frontback.setEnabled(true);
+
+
+        mHandler.removeMessages(HANDLE_STOP_RECORD);
+        mHandler.removeMessages(2);
+
+        checkStatus();
+    }
+
+    /**
+     * 检查录制时间，显示/隐藏下一步按钮
+     */
+    private int checkStatus() {
+        int duration = 0;
+        if (!isFinishing() && mMediaObject != null) {
+            duration = mMediaObject.getDuration();
+            if (duration < RECORD_TIME_MIN) {
+                if (duration == 0) {
+                    camera_frontback.setVisibility(View.VISIBLE);
+                    mRecordDelete.setVisibility(View.GONE);
+                }
+                // 视频必须大于3秒
+                if (mTitleNext.getVisibility() != View.INVISIBLE)
+                    mTitleNext.setVisibility(View.INVISIBLE);
+            } else {
+                // 下一步
+                if (mTitleNext.getVisibility() != View.VISIBLE) {
+                    mTitleNext.setVisibility(View.VISIBLE);
+                }
+            }
+        }
+        return duration;
+    }
+
+    /**
+     * 取消回删
+     */
+    private boolean cancelDelete() {
+        if (mMediaObject != null) {
+            MediaObject.MediaPart part = mMediaObject.getCurrentPart();
+            if (part != null && part.remove) {
+                part.remove = false;
+//                mRecordDelete.setChecked(false);
+
+                if (mProgressView != null)
+                    mProgressView.invalidate();
+
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 开始录制
+     */
+    private void startRecord() {
+        if (mMediaRecorder != null) {
+
+            MediaObject.MediaPart part = mMediaRecorder.startRecord();
+            if (part == null) {
+                return;
+            }
+            // 如果使用MediaRecorderSystem，不能在中途切换前后摄像头，否则有问题
+//            if (mMediaRecorder instanceof MediaRecorderSystem) {
+//                camera_frontback.setVisibility(View.GONE);
+//            }
+            mProgressView.setData(mMediaObject);
+        }
+
+        mPressedStatus = true;
+//		TODO 开始录制的图标
+        img_camera.animate().scaleX(0.8f).scaleY(0.8f).setDuration(500).start();
+        if (mHandler != null) {
+            mHandler.sendEmptyMessageDelayed(2, 1000);
+            mHandler.removeMessages(HANDLE_INVALIDATE_PROGRESS);
+            mHandler.sendEmptyMessage(HANDLE_INVALIDATE_PROGRESS);
+            mHandler.removeMessages(HANDLE_STOP_RECORD);
+            mHandler.sendEmptyMessageDelayed(HANDLE_STOP_RECORD,
+                    RECORD_TIME_MAX - mMediaObject.getDuration());
+        }
+        mRecordDelete.setVisibility(View.GONE);
+        camera_frontback.setEnabled(false);
+        flash_light.setEnabled(false);
+    }
+
+    public ProgressDialog showProgress(String title, String message, int theme) {
+
+        if (mProgressDialog == null) {
+            if (theme > 0)
+                mProgressDialog = new ProgressDialog(this, theme);
+            else
+                mProgressDialog = new ProgressDialog(this);
+            mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+            mProgressDialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+            mProgressDialog.setCanceledOnTouchOutside(false);// 不能取消
+            mProgressDialog.setCancelable(false);
+            mProgressDialog.setIndeterminate(true);// 设置进度条是否不明确
+        }
+
+        if (!StringUtils.INSTANCE.isEmpty(title))
+            mProgressDialog.setTitle(title);
+        mProgressDialog.setMessage(message);
+        mProgressDialog.show();
+        return mProgressDialog;
+    }
+
+    public void hideProgress() {
+        if (mProgressDialog != null) {
+            mProgressDialog.dismiss();
+        }
+    }
+
+
+    private MediaRecorderConfig getMediaRecorderConfig() {
+        String width = "480";  //宽，，对应	mMediaRecorder.setVideoSize(640, 360);//after setVideoSource(),after setOutFormat()
+        String height = "640";  //高
+//        String width = "768";  //宽
+//        String height = "1080";  //高
+        String maxFramerate = "15"; //最大帧率
+        String maxTime = "60000"; //最大录制时间
+        String minTime = "1500";
+        BaseMediaBitrateConfig recordMode;
+        BaseMediaBitrateConfig compressMode = null;
+        recordMode = new AutoVBRMode(Integer.valueOf("15"));  //第一次压缩比例
+        recordMode.setVelocity("ultrafast");
+        compressMode = new AutoVBRMode(Integer.valueOf("28"));
+        compressMode.setVelocity("ultrafast");
+        return new MediaRecorderConfig.Buidler()
+                .doH264Compress(compressMode)
+                .setMediaBitrateConfig(recordMode)
+                .smallVideoWidth(Integer.valueOf(width))
+                .smallVideoHeight(Integer.valueOf(height))
+                .recordTimeMax(Integer.valueOf(maxTime))
+                .maxFrameRate(Integer.valueOf(maxFramerate))
+                .captureThumbnailsTime(1)
+                .recordTimeMin(Integer.valueOf(minTime))
+                .build();
     }
 }

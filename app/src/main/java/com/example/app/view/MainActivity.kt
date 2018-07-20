@@ -2,6 +2,7 @@ package com.example.app.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Environment
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
@@ -11,6 +12,8 @@ import com.example.app.R
 import com.example.app.adapter.BaseSectionAdapter
 import com.example.app.bean.MySection
 import com.example.app.rxjava.module.RxJavaActivity
+import com.example.app.smalllib.VCamera
+import com.example.app.utils.DeviceUtils
 import com.example.app.utils.ToastUtils
 import com.example.app.widget.SectionDecoration
 import com.gavin.com.library.listener.PowerGroupListener
@@ -102,6 +105,7 @@ class MainActivity : BaseTitleActivity() {
                         startActivity(mIntent)
                     }
                     8 -> {
+                        initSmallVideo()
                         mIntent.setClass(mContext, CameraActivity::class.java)
                         startActivity(mIntent)
                     }
@@ -142,5 +146,24 @@ class MainActivity : BaseTitleActivity() {
                 .setGroupHeight(100)
                 .build()
         rlv.addItemDecoration(decoration)
+    }
+
+    internal fun initSmallVideo() {
+        // 设置拍摄视频缓存路径
+        val dcim = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM)
+        if (DeviceUtils.isZte()) {
+            if (dcim.exists()) {
+                VCamera.setVideoCachePath(dcim.toString() + "/mabeijianxi/")
+            } else {
+                VCamera.setVideoCachePath(dcim.path.replace("/sdcard/",
+                        "/sdcard-ext/") + "/mabeijianxi/")
+            }
+        } else {
+            VCamera.setVideoCachePath(dcim.toString() + "/mabeijianxi/")
+        }
+        // 开启log输出,ffmpeg输出到logcat
+        VCamera.setDebugMode(true)
+        // 初始化拍摄SDK，必须
+        VCamera.initialize(this)
     }
 }

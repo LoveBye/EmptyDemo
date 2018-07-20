@@ -1,5 +1,7 @@
 package com.example.app.widget.album;
 
+import com.example.app.utils.StringUtils;
+
 import java.util.ArrayList;
 
 /**
@@ -36,7 +38,7 @@ public class Folder {
     }
 
     public void addImage(Image image) {
-        if (image != null && StringUtils.isNotEmptyString(image.getPath())) {
+        if (image != null && StringUtils.INSTANCE.isNotEmptyString(image.getPath())) {
             if (images == null) {
                 images = new ArrayList<>();
             }

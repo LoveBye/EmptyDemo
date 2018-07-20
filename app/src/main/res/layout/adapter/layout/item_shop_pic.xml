@@ -15,8 +15,9 @@
 
     <ImageView
         android:id="@+id/del"
-        android:layout_width="12pt"
-        android:layout_height="12pt"
+        android:layout_width="15pt"
+        android:layout_height="15pt"
         android:layout_alignRight="@+id/iv"
-        android:background="@drawable/newdeleteimage" />
+        android:padding="2pt"
+        android:src="@drawable/newdeleteimage" />
 </RelativeLayout>

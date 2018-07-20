@@ -9,6 +9,7 @@ import com.chad.library.adapter.base.BaseViewHolder
 import com.example.app.adapter.BaseSectionAdapter
 import com.example.app.bean.MySection
 import com.example.app.R
+import com.example.app.utils.GlideUtils
 import com.example.app.widget.SectionDecoration
 import com.example.app.utils.ToastUtils
 import com.gavin.com.library.listener.PowerGroupListener

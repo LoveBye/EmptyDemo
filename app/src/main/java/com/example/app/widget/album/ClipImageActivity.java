@@ -14,6 +14,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 
 import com.example.app.R;
+import com.example.app.utils.StringUtils;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -97,7 +98,7 @@ public class ClipImageActivity extends Activity {
             bitmap = null;
         }
 
-        if (StringUtils.isNotEmptyString(imagePath)) {
+        if (StringUtils.INSTANCE.isNotEmptyString(imagePath)) {
             ArrayList<String> selectImages = new ArrayList<>();
             selectImages.add(imagePath);
             Intent intent = new Intent();
