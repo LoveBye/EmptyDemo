@@ -45,6 +45,7 @@ import com.example.app.utils.CameraUtil;
 import com.example.app.utils.FileUtils;
 import com.example.app.utils.GlideUtils;
 import com.example.app.utils.LogUtils;
+import com.example.app.utils.StatusBarCompat;
 import com.example.app.utils.StringUtils;
 import com.example.app.utils.SystemUtils;
 import com.yixia.videoeditor.adapter.UtilityAdapter;
@@ -53,7 +54,12 @@ import java.io.File;
 import java.io.IOException;
 import java.text.BreakIterator;
 
-public class CameraActivity extends Activity implements SurfaceHolder.Callback, View.OnClickListener, MediaRecorderBase.OnErrorListener, MediaRecorderBase.OnEncodeListener, MediaRecorderBase.OnPreparedListener {
+public class CameraActivity extends Activity
+        implements SurfaceHolder.Callback,
+        View.OnClickListener,
+        MediaRecorderBase.OnErrorListener,
+        MediaRecorderBase.OnEncodeListener,
+        MediaRecorderBase.OnPreparedListener {
     private Camera mCamera;
     private SurfaceView surfaceView;
     private SurfaceHolder mHolder;

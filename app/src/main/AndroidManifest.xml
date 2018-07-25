@@ -174,5 +174,7 @@
         <activity android:name=".view.SlidingDeleteActivity" />
         <activity android:name=".view.TextViewActivity" />
         <activity android:name=".view.CameraActivity" />
+        <activity android:name=".view.VideoSurfaceViewActivity" />
+        <activity android:name=".view.VideoViewActivity" />
     </application>
 </manifest>

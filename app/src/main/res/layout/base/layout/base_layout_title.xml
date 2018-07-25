@@ -37,9 +37,13 @@
             <ImageView
                 android:id="@+id/img_right"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="22pt"
                 android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true" />
+                android:layout_alignParentRight="true"
+                android:paddingBottom="5pt"
+                android:paddingLeft="8pt"
+                android:paddingRight="8pt"
+                android:paddingTop="5pt" />
         </RelativeLayout>
 
         <View

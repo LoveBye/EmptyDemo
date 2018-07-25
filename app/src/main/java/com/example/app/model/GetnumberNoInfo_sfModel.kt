@@ -39,21 +39,20 @@ class GetnumberNoInfo_sfModel(val context: Context) : Observable<Response>() {
                     .newCall(builder)
                     .execute()
             e.onNext(response)
-        })
-                .map(Function<Response, GetnumberNoInfo_sfBean> {
-                    try {
-                        if (it.isSuccessful()) {
-                            if (it.body() != null) {
-                                val fromJson = Gson().fromJson(it.body()!!.string(), GetnumberNoInfo_sfBean::class.java)
-                                LogUtils.showLog(context, "" + fromJson)
-                                return@Function fromJson
-                            }
-                        }
-                    } catch (e: Exception) {
-                        ToastUtils.showToast(context, e.toString())
+        }).map(Function<Response, GetnumberNoInfo_sfBean> {
+            try {
+                if (it.isSuccessful()) {
+                    if (it.body() != null) {
+                        val fromJson = Gson().fromJson(it.body()!!.string(), GetnumberNoInfo_sfBean::class.java)
+                        LogUtils.showLog(context, "" + fromJson)
+                        return@Function fromJson
                     }
-                    return@Function null
-                })
+                }
+            } catch (e: Exception) {
+                ToastUtils.showToast(context, e.toString())
+            }
+            return@Function null
+        })
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(consumer)
