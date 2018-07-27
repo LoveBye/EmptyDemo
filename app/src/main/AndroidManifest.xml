@@ -25,7 +25,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <!--Android手机 全面屏（18：9屏幕）适配指南-->
+        <!--https://blog.csdn.net/wqbs369/article/details/78641952-->
+        <meta-data
+            android:name="android.max_aspect"
+            android:value="2.1" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

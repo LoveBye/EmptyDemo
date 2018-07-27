@@ -38,8 +38,8 @@ class MainActivity : BaseTitleActivity() {
         list.add(MySection(6, R.drawable.share_black, "Picture", "UploadPictureActivity"))
         list.add(MySection(7, R.drawable.share_black, "TextView", "TextViewActivity"))
         list.add(MySection(8, R.drawable.share_black, "自定义View", "CameraActivity"))
-        list.add(MySection(9, R.drawable.share_black, "自定义View", "VideoSurfaceViewActivity"))
-        list.add(MySection(10, R.drawable.share_black, "自定义View", "VideoViewActivity"))
+        list.add(MySection(9, R.drawable.share_black, "视频播放", "VideoSurfaceViewActivity"))
+        list.add(MySection(10, R.drawable.share_black, "视频播放", "VideoViewActivity"))
         val mAdapter = MyAdapter(R.layout.base_item_recycler, R.layout.base_header_recycler, list)
         recycler_catalog.setAdapter(mAdapter)
         initDecoration(recycler_catalog, list)
@@ -112,11 +112,10 @@ class MainActivity : BaseTitleActivity() {
                         startActivity(mIntent)
                     }
                     9 -> {
-                        initSmallVideo()
                         mIntent.setClass(mContext, VideoSurfaceViewActivity::class.java)
                         startActivity(mIntent)
-                    }  10 -> {
-                        initSmallVideo()
+                    }
+                    10 -> {
                         mIntent.setClass(mContext, VideoViewActivity::class.java)
                         startActivity(mIntent)
                     }
