@@ -13,8 +13,8 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.MediaStore
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
@@ -173,13 +173,17 @@ class ChoosePicPresenterImpl : PresenterImpl, View.OnClickListener {
             if (requestCode == GET_PHOTO_FROM_ALBUM && data != null) {
                 val images = data.getStringArrayListExtra(ImageSelectorUtils.SELECT_RESULT)
                 if (isMulti) {
-                    for (i in images.indices) {
-                        val bitmap = getBitmapYS(images[i])
-                        saveBitmapFile(mListImgviewAddress.size - 1, bitmap)
+                    images?.let {
+                        for (i in images.indices) {
+                            val bitmap = getBitmapYS(images[i])
+                            saveBitmapFile(mListImgviewAddress.size - 1, bitmap)
+                        }
                     }
                 } else {
-                    val bitmap = getBitmapYS(images[0])
-                    saveBitmapFile(mListImgviewAddress.size - 1, bitmap)
+                    images?.let {
+                        val bitmap = getBitmapYS(images[0])
+                        saveBitmapFile(mListImgviewAddress.size - 1, bitmap)
+                    }
                 }
             }
         } catch (e: Exception) {

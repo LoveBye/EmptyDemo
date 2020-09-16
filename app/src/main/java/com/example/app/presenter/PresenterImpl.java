@@ -3,12 +3,8 @@ package com.example.app.presenter;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.pm.PackageManager;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-
-import java.util.ArrayList;
-
-import static butterknife.internal.Utils.arrayOf;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 public class PresenterImpl {
     private final Activity mActivity;

@@ -6,10 +6,10 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.os.Message
-import android.support.v4.app.ActivityCompat
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
@@ -31,9 +31,9 @@ class WaterfallActivity : BaseTitleActivity() {
     @SuppressLint("HandlerLeak")
     private val handler: Handler =
             object : Handler() {     //此处的object 要加，否则无法重写 handlerMessage
-                override fun handleMessage(msg: Message?) {
+                override fun handleMessage(msg: Message) {
                     super.handleMessage(msg)
-                    if (msg?.what == 0) {
+                    if (msg.what == 0) {
                         if (dataList.size > ITEM_COUNT) {
                             if (ITEM_COUNT < 20) {
                                 adapter.setNewData(dataList.subList(0, ITEM_COUNT))
@@ -58,7 +58,7 @@ class WaterfallActivity : BaseTitleActivity() {
         rlv.adapter = adapter
         adapter.mItemTouchHelper.attachToRecyclerView(rlv)//设置可滚动
         rlv.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrollStateChanged(recyclerView: RecyclerView?, newState: Int) {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
                 super.onScrollStateChanged(recyclerView, newState)
                 manager.invalidateSpanAssignments()
             }

@@ -12,7 +12,9 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.Xfermode;
-import android.support.v7.widget.AppCompatImageView;
+
+import androidx.appcompat.widget.AppCompatImageView;
+
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
@@ -126,10 +128,7 @@ public class ClipImageView extends AppCompatImageView {
             rf = new RectF(r);
         }
         // 画入前景圆形蒙板层
-        int sc = canvas.saveLayer(rf, null, Canvas.MATRIX_SAVE_FLAG
-                | Canvas.CLIP_SAVE_FLAG | Canvas.HAS_ALPHA_LAYER_SAVE_FLAG
-                | Canvas.FULL_COLOR_LAYER_SAVE_FLAG
-                | Canvas.CLIP_TO_LAYER_SAVE_FLAG | Canvas.ALL_SAVE_FLAG);
+        int sc = canvas.saveLayer(rf, null, Canvas.ALL_SAVE_FLAG);
         //画入矩形黑色半透明蒙板层
         canvas.drawRect(r, mFrontGroundPaint);
         //设置Xfermode，目的是为了去除矩形黑色半透明蒙板层和圆形的相交部分

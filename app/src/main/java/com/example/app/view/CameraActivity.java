@@ -11,8 +11,8 @@ import android.hardware.Camera;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -45,14 +45,12 @@ import com.example.app.utils.CameraUtil;
 import com.example.app.utils.FileUtils;
 import com.example.app.utils.GlideUtils;
 import com.example.app.utils.LogUtils;
-import com.example.app.utils.StatusBarCompat;
 import com.example.app.utils.StringUtils;
 import com.example.app.utils.SystemUtils;
 import com.yixia.videoeditor.adapter.UtilityAdapter;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.BreakIterator;
 
 public class CameraActivity extends Activity
         implements SurfaceHolder.Callback,

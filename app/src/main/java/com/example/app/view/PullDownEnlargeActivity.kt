@@ -2,7 +2,7 @@ package com.example.app.view
 
 import android.os.Bundle
 import android.os.PersistableBundle
-import android.support.v7.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView

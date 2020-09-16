@@ -8,8 +8,8 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_text_view.*
 import android.graphics.drawable.Drawable
 import android.os.Build
-import android.support.v4.app.FragmentTabHost
-import android.support.v4.content.ContextCompat
+import androidx.fragment.app.FragmentTabHost
+import androidx.core.content.ContextCompat
 import android.text.Editable
 import android.text.Html
 import android.text.Spannable

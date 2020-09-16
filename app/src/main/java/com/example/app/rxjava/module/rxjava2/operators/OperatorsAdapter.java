@@ -1,6 +1,6 @@
 package com.example.app.rxjava.module.rxjava2.operators;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 import android.view.View;
 import android.view.View.OnClickListener;
 

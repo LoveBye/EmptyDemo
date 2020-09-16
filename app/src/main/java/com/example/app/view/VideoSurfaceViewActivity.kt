@@ -79,7 +79,9 @@ class VideoSurfaceViewActivity : BaseTitleActivity() {
     //    播放
     fun play(v: View) {
         play()
-        Log.d("zhangdi", path)
+        path?.let {
+            Log.d("zhangdi", it)
+        }
     }
 
     private var isPause: Boolean = false

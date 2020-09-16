@@ -3,8 +3,8 @@ package com.example.app.view
 import android.content.Intent
 import android.os.Bundle
 import android.os.Environment
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import android.view.View
 import android.widget.TextView
 import com.chad.library.adapter.base.BaseViewHolder
